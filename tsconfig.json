@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "baseUrl": ".",
+	"paths": {
+		"@uinamic-ui/*": ["packages/@uinamic-ui/src/*"],
+		"@uinamic-system/*": ["packages/@uinamic-system/src/*"]
+	},
+	"target": "ESNext",
     "module": "ESNext",
     "declaration": true,
     "outDir": "dist",

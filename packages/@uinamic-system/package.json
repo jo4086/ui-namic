@@ -1,0 +1,18 @@
+{
+  "name": "@uinamic/system",
+  "version": "0.1.0",
+  "description": "uinamic engine library",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "uinamic",
+    "styled",
+    "createItem",
+    "engine",
+    "system"
+  ],
+  "author": "jo4086",
+  "license": "MIT"
+}
