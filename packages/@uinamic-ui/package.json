@@ -2,6 +2,7 @@
   "name": "@uinamic/ui",
   "version": "0.1.0",
   "description": "uinamic UI component",
+  "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -9,6 +10,7 @@
 	  "@uinamic/system": "workspace:*"
   },
   "scripts": {
+	"build": "tsup src/index.tsx --format cjs, esm --dts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -16,6 +18,5 @@
     "ui",
     "component"
   ],
-  "author": "jo4086",
-  "license": "MIT"
+  "author": "jo4086"
 }
