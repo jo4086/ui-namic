@@ -1,6 +1,6 @@
 {
     "name": "ui-namic",
-    "private": false,
+    "private": true,
     "version": "0.1.0",
     "description": "An event-based dynamic UI Component Library",
     "main": "dist/cjs/index.js",
