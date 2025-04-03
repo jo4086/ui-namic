@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "jsx": "react-jsx",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "declaration": false, // ❌ 타입 추출 안 하니까
+        "emitDeclarationOnly": false,
+        "strict": false, // JS-only면 꺼도 됨
+        "skipLibCheck": true,
+        "allowJs": true, // ✅ JS만 써도 인식 가능
+        "checkJs": false,
+        "outDir": "./dist",
+        "baseUrl": ".",
+        "paths": {
+            "@theme": ["src/theme/index.js"],
+            "@Components/*": ["src/*"]
+        }
+    },
+    "include": ["./"],
+    "exclude": ["node_modules", "dist"]
+}

@@ -3,24 +3,12 @@
     "private": true,
     "version": "0.1.0",
     "description": "An event-based dynamic UI Component Library",
-    "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.js",
-    "types": "dist/types/index.d.ts",
-    "exports": {
-        ".": {
-            "import": "./dist/index.js",
-            "require": "./dist/index.js",
-            "types": "./dist/index.d.ts"
-        }
-    },
     "files": [
         "dist"
     ],
     "scripts": {
         "build": "pnpm -r build",
         "dev": "pnpm --filter playground dev",
-        "build:cjs": "tsc -p tsconfig.build-cjs.json",
-        "build:esm": "tsc -p tsconfig.build-esm.json",
         "clean": "rimraf dist"
     },
     "keywords": [
@@ -38,12 +26,9 @@
         "react-dom": ">=17.0.0"
     },
     "devDependencies": {
-        "@rollup/plugin-commonjs": "^28.0.3",
-        "@rollup/plugin-node-resolve": "^16.0.1",
-        "@rollup/plugin-typescript": "^12.1.2",
-        "rollup": "^4.38.0",
+        "rimraf": "^6.0.1",
         "tsup": "^8.4.0",
-        "typescript": "^5.8.2"
+        "turbo": "^2.4.4"
     },
     "packageManager": "pnpm@10.7.0",
     "publishConfig": {
