@@ -11,7 +11,7 @@ const easingSet = new Set(['easing'])
 
 function normalizeStyle(props) {
     const { dynamic, keyframes, media, pseudo, ...rest } = props
-    // console.log(props)
+    console.log(props)
 
     const classKey = JSON.stringify({ rest, dynamic, media, keyframes, pseudo })
     const sortClassKey = stableStringify(props)

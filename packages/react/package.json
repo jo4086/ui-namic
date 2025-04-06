@@ -1,13 +1,13 @@
 {
-    "name": "@uinamic/ui",
+    "name": "@uinamic/react",
     "version": "0.1.0",
-    "description": "uinamic UI component",
+    "description": "uinamic dynamic UI react Engine",
     "license": "MIT",
-    "main": "./src/index.js",
-    "module": "dist/index.js",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "exports": {
         ".": {
-            "import": "./dist/index.js",
+            "import": "./dist/index.mjs",
             "require": "./dist/index.js"
         }
     },
@@ -23,13 +23,15 @@
     "keywords": [
         "uinamic",
         "ui",
-        "component"
+        "react",
+        "react-component"
     ],
     "author": "jo4086",
     "devDependencies": {
         "react": ">=16.8.0 <19.0.0",
         "react-dom": ">=16.8.0 <19.0.0",
-        "tsup": "^8.4.0"
+        "tsup": "^8.4.0",
+        "@uinamic/debug": "workspace:*"
     },
     "peerDependencies": {
         "react": ">=16.8.0 <19.0.0",

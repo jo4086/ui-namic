@@ -9,4 +9,5 @@ export default defineConfig({
     target: 'es2018',
     treeshake: true,
     minify: false,
+    external: ['@uinamic/debug'],
 })

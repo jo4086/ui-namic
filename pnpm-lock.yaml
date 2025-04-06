@@ -25,21 +25,73 @@ importers:
         specifier: ^2.4.4
         version: 2.4.4
 
-  packages/@uinamic-system:
+  packages/debug: {}
+
+  packages/react:
+    dependencies:
+      '@uinamic/system':
+        specifier: workspace:*
+        version: link:../uinamic-system
     devDependencies:
+      '@uinamic/debug':
+        specifier: workspace:*
+        version: link:../debug
+      react:
+        specifier: '>=16.8.0 <19.0.0'
+        version: 18.3.1
+      react-dom:
+        specifier: '>=16.8.0 <19.0.0'
+        version: 18.3.1(react@18.3.1)
+      tsup:
+        specifier: ^8.4.0
+        version: 8.4.0(postcss@8.5.3)(typescript@5.8.2)
+
+  packages/react-ui:
+    dependencies:
+      '@uinamic/react':
+        specifier: workspace:*
+        version: link:../react
+      '@uinamic/system':
+        specifier: workspace:*
+        version: link:../uinamic-system
+    devDependencies:
+      '@uinamic/debug':
+        specifier: workspace:*
+        version: link:../debug
+      react:
+        specifier: '>=16.8.0 <19.0.0'
+        version: 18.3.1
+      react-dom:
+        specifier: '>=16.8.0 <19.0.0'
+        version: 18.3.1(react@18.3.1)
+      tsup:
+        specifier: ^8.4.0
+        version: 8.4.0(postcss@8.5.3)(typescript@5.8.2)
+
+  packages/uinamic-system:
+    devDependencies:
+      '@uinamic/debug':
+        specifier: workspace:*
+        version: link:../debug
       tsup:
         specifier: ^8.4.0
         version: 8.4.0(postcss@8.5.3)(typescript@5.8.2)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
+      vitest:
+        specifier: ^3.1.1
+        version: 3.1.1(@types/node@20.17.28)
 
-  packages/@uinamic-ui:
+  packages/uinamic-ui:
     dependencies:
       '@uinamic/system':
         specifier: workspace:*
-        version: link:../@uinamic-system
+        version: link:../uinamic-system
     devDependencies:
+      '@uinamic/debug':
+        specifier: workspace:*
+        version: link:../debug
       react:
         specifier: '>=16.8.0 <19.0.0'
         version: 18.3.1
@@ -52,6 +104,15 @@ importers:
 
   playground/vite:
     dependencies:
+      '@uinamic/react':
+        specifier: workspace:*
+        version: link:../../packages/react
+      '@uinamic/react-ui':
+        specifier: workspace:*
+        version: link:../../packages/react-ui
+      '@uinamic/system':
+        specifier: workspace:*
+        version: link:../../packages/uinamic-system
       react:
         specifier: ^19.0.0
         version: 19.1.0
@@ -68,6 +129,12 @@ importers:
       '@types/react-dom':
         specifier: ^19.0.4
         version: 19.0.4(@types/react@19.0.12)
+      '@uinamic/debug':
+        specifier: workspace:*
+        version: link:../../packages/debug
+      '@uinamic/ui':
+        specifier: workspace:*
+        version: link:../../packages/uinamic-ui
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.2.3(@types/node@20.17.28))

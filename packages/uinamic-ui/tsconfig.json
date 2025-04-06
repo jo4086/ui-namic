@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "jsx": "react-jsx",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "declaration": false, 
+        "emitDeclarationOnly": false,
+        "strict": false, 
+        "skipLibCheck": true,
+        "allowJs": true,
+        "checkJs": false,
+        "outDir": "./dist",
+        "baseUrl": ".",
+        "paths": {
+            "@theme": ["src/theme/index.js"],
+            "@Components/*": ["src/*"]
+        }
+    },
+    "include": ["./"],
+    "exclude": ["node_modules", "dist"]
+}

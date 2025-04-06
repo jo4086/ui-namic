@@ -13,7 +13,7 @@ const createItem = ({ type: defaultType = 'div', display: defaultDisplay = 'bloc
         const resolvedDynamicType = dynamicType || defaultDynamicType
         const mergedStyle = { ...defaultBaseStyle, ...dynamicStyle }
 
-        // console.log('mergedStyle:', mergedStyle)
+        console.log('mergedStyle:', mergedStyle)
 
         const { style, other, className, dynamicTrigger, patchDisplay } = santizeStyle({
             type: resolvedType,
