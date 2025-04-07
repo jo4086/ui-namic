@@ -1,4 +1,5 @@
 import { defineConfig } from 'tsup'
+import pkg from './package.json'
 
 export default defineConfig({
     entry: ['src/index.js'],
@@ -9,5 +10,8 @@ export default defineConfig({
     target: 'es2018',
     treeshake: true,
     minify: false,
-    external: ['@uinamic/debug'],
+    external: [...Object.keys(pkg.peerDependencies || {}), '@uinamic/debug'],
+    esbuildOptions(options) {
+        options.jsx = 'automatic'
+    },
 })

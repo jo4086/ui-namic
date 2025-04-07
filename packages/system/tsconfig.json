@@ -11,11 +11,7 @@
         "strict": false,
         "skipLibCheck": true,
         "outDir": "./dist",
-        "baseUrl": "./src",
-        "paths": {
-            "@uinamic/react": ["../../react/dist"],
-            "@uinamic/debug": ["../../debug/src/index.js"]
-        }
+        "baseUrl": "./src"
     },
     "include": ["src"],
     "exclude": ["node_modules", "dist"]

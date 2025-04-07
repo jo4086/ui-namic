@@ -1,0 +1,37 @@
+{
+    "name": "@uinamic/system",
+    "version": "0.1.0",
+    "description": "uinamic engine library",
+    "type": "module",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsup"
+    },
+    "keywords": [
+        "uinamic",
+        "styled",
+        "createItem",
+        "engine",
+        "system"
+    ],
+    "author": "jo4086",
+    "license": "MIT",
+    "devDependencies": {
+        "tsup": "^8.4.0",
+        "typescript": "^5.8.2",
+        "@uinamic/debug": "workspace:*"
+    },
+    "peerDependencies": {
+        "react": ">=17.0.0 <19.0.0",
+        "react-dom": ">=17.0.0 <19.0.0"
+    }
+}

@@ -1,11 +1,10 @@
-// ui/Box.js
+// ui/Button.js
 
-// import { createItem } from '@uinamic/react'
 import { createItem } from '@uinamic/react'
 import { globalStyle } from '../theme'
 
-export const Box = createItem({
-    type: 'div',
+const Button = createItem({
+    type: 'button',
     display: 'flex',
     baseStyle: {
         ...globalStyle,
@@ -18,4 +17,4 @@ export const Box = createItem({
     },
 })
 
-export default Box
+export default Button

@@ -1,11 +1,10 @@
-// ui/Box.js
+// ui/Input.js
 
-// import { createItem } from '@uinamic/react'
 import { createItem } from '@uinamic/react'
 import { globalStyle } from '../theme'
 
-export const Box = createItem({
-    type: 'div',
+const Input = createItem({
+    type: 'input',
     display: 'flex',
     baseStyle: {
         ...globalStyle,
@@ -15,7 +14,9 @@ export const Box = createItem({
         alignItems: 'center',
         textAlign: 'center',
         borderRadius: ' 4px',
+        fontSize: '1.5rem',
+        padding: '10px 5px',
     },
 })
 
-export default Box
+export default Input

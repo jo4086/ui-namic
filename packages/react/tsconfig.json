@@ -1,20 +1,22 @@
 {
     "compilerOptions": {
-        "target": "ES2018",
+        "target": "ES2020",
         "module": "ESNext",
         "moduleResolution": "Node",
         "jsx": "react-jsx",
+        "allowJs": true,
+        "checkJs": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "declaration": false, 
-        "emitDeclarationOnly": false,
-        "strict": false, 
+        "strict": false,
         "skipLibCheck": true,
-        "allowJs": true, 
-        "checkJs": false,
         "outDir": "./dist",
-        "baseUrl": ".",
+        "baseUrl": "./src",
+        "paths": {
+            "@uinamic/system": ["../../system/dist"],
+            "@uinamic/debug": ["../../debug/src/index.js"]
+        }
     },
-    "include": ["./"],
+    "include": ["src"],
     "exclude": ["node_modules", "dist"]
 }

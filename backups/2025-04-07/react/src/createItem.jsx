@@ -1,8 +1,5 @@
-import { logStyle, logGroup } from '@uinamic/debug'
+import { logGroup, logStyle } from '@uinamic/debug'
 import { generateRenderData } from '@uinamic/system'
-
-// import { logGroup, logStyle } from '@uinamic/debug'
-// import { generateRenderData } from '@uinamic/system'
 
 function createItem(config) {
     const getRenderData = generateRenderData(config)

@@ -21,11 +21,9 @@
     ],
     "author": "jo4086",
     "license": "MIT",
-    "peerDependencies": {
-        "react": ">=17.0.0",
-        "react-dom": ">=17.0.0"
-    },
     "devDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "rimraf": "^6.0.1",
         "tsup": "^8.4.0",
         "turbo": "^2.4.4"

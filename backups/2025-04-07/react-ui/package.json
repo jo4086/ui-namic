@@ -14,8 +14,8 @@
         "dist"
     ],
     "dependencies": {
-        "@uinamic/react": "workspace:*",
-        "@uinamic/system": "workspace:*"
+        "@uinamic/system": "workspace:*",
+        "@uinamic/react": "workspace:*"
     },
     "scripts": {
         "build": "tsup"
@@ -29,14 +29,14 @@
     "author": "jo4086",
     "license": "MIT",
     "devDependencies": {
-        "react": ">=17.0.0 <19.0.0",
-        "react-dom": ">=17.0.0 <19.0.0",
+        "react": ">=16.8.0 <19.0.0",
+        "react-dom": ">=16.8.0 <19.0.0",
         "tsup": "^8.4.0",
         "@uinamic/debug": "workspace:*"
     },
     "peerDependencies": {
-        "react": ">=17.0.0 <19.0.0",
-        "react-dom": ">=17.0.0 <19.0.0"
+        "react": ">=16.8.0 <19.0.0",
+        "react-dom": ">=16.8.0 <19.0.0"
     },
     "packageManager": "pnpm@10.7.0"
 }

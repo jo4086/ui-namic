@@ -1,10 +1,9 @@
 // ui/Box.js
 
-// import { createItem } from '@uinamic/react'
 import { createItem } from '@uinamic/react'
 import { globalStyle } from '../theme'
 
-export const Box = createItem({
+const Box = createItem({
     type: 'div',
     display: 'flex',
     baseStyle: {

@@ -9,7 +9,6 @@ const Input = createItem({
     baseStyle: {
         ...globalStyle,
         border: '1px solid black',
-        padding: '20px',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
