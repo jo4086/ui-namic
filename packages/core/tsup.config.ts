@@ -1,5 +1,6 @@
 import { defineConfig } from 'tsup'
 
+
 export default defineConfig({
     entry: ['src/index.js'],
     format: ['esm', 'cjs'],
@@ -9,10 +10,5 @@ export default defineConfig({
     target: 'es2018',
     treeshake: true,
     minify: false,
-    outExtension({ format }) {
-        return {
-            js: format === 'esm' ? '.mjs' : '.js',
-        }
-    },
-    external: ['react', 'react-dom'],
+    external: [],
 })

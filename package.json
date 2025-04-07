@@ -3,13 +3,11 @@
     "private": true,
     "version": "0.1.0",
     "description": "An event-based dynamic UI Component Library",
-    "files": [
-        "dist"
-    ],
     "scripts": {
         "build": "pnpm -r build",
-        "dev": "pnpm --filter playground dev",
-        "clean": "rimraf dist"
+        "dev": "turbo run dev --parallel",
+        "clean": "rimraf \"**/dist\"",
+        "lint": "turbo run lint"
     },
     "keywords": [
         "react",
@@ -21,14 +19,10 @@
     ],
     "author": "jo4086",
     "license": "MIT",
-    "peerDependencies": {
-        "react": ">=17.0.0",
-        "react-dom": ">=17.0.0"
-    },
     "devDependencies": {
         "rimraf": "^6.0.1",
-        "tsup": "^8.4.0",
-        "turbo": "^2.4.4"
+        "turbo": "^2.4.4",
+        "typescript": "^5.8.3"
     },
     "packageManager": "pnpm@10.7.0",
     "publishConfig": {

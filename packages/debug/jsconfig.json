@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@debug": ["src/index.js*"]
+        },
+        "jsx": "react-jsx"
+    },
+    "include": ["src"]
+}

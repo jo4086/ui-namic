@@ -1,9 +1,9 @@
 // ui/Button.js
 
-import { createItem } from '@uinamic/react'
+import { createItem } from '@react-ui'
 import { globalStyle } from '../theme'
 
-const Button = createItem({
+export const Button = createItem({
     type: 'button',
     display: 'flex',
     baseStyle: {

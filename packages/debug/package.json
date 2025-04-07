@@ -1,0 +1,25 @@
+{
+    "name": "@uinamic/debug",
+    "version": "0.1.0",
+    "description": "",
+    "type": "module",
+    "main": "index.js",
+    "module": "index/mjs",
+    "exports": {
+        ".": {
+            "import": "./index.mjs",
+            "require": "./index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsup --watch"
+    },
+    "keywords": [],
+    "author": "jo4086",
+    "license": "MIT",
+    "packageManager": "pnpm@10.7.0",
+    "devDependencies": {
+        "tsup": "^8.4.0"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@core": ["../../packages/core/src/index.js"],
+            "@react-ui": ["../../packages/react-ui/src/index.js"],
+            "@debug": ["../../packages/debug/src/index.js"]
+        }
+    },
+    "include": ["src"]
+}

@@ -1,5 +1,5 @@
 {
-    "name": "@uinamic/react-ui",
+    "name": "@uinamic/core",
     "version": "0.1.0",
     "description": "",
     "type": "module",
@@ -22,9 +22,6 @@
     "author": "jo4086",
     "license": "MIT",
     "packageManager": "pnpm@10.7.0",
-    "dependencies": {
-        "@uinamic/core": "workspace:*"
-    },
     "devDependencies": {
         "tsup": "^8.4.0"
     },

@@ -1,15 +1,14 @@
 // ui/Input.js
 
-import { createItem } from '@uinamic/react'
+import { createItem } from '@react-ui'
 import { globalStyle } from '../theme'
 
-const Input = createItem({
+export const Input = createItem({
     type: 'input',
     display: 'flex',
     baseStyle: {
         ...globalStyle,
         border: '1px solid black',
-        padding: '20px',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
