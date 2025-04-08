@@ -129,6 +129,10 @@ export const pseudoElementList = [
 
     // Commonly supported experimental (조건부)
     'placeholder',
+
+    'marker',
+    // Browser
+    '-webkit-scrollbar',
 ]
 
 export const pseudoElementSet = new Set(pseudoElementList)
@@ -174,13 +178,13 @@ const borderList = ['border', 'borderTop', 'borderBottom', 'borderRight', 'borde
 const borderAbbrList = ['bd', 'bt', 'br', 'bb', 'bl', 'by', 'bx']
 const colorList = ['color', 'backgroundColor', 'caretColor']
 const layoutList = ['width', 'height', 'maxWidth', 'minWidth', 'maxHeight', 'minHeight', 'aspectRatio', 'boxSizing', 'position', 'top', 'right', 'bottom', 'left', 'zIndex']
-const typographyList = ['fontSize', 'fontWeight', 'fontFamily', 'textAlign', 'lineHeight', 'letterSpacing', 'textDecoration', 'whiteSpace']
+const typographyList = ['fontSize', 'fontWeight', 'fontFamily', 'textAlign', 'lineHeight', 'letterSpacing', 'textDecoration', 'whiteSpace', 'quotes']
 const effectList = ['boxShadow', 'opacity', 'transform', 'willChange']
 const transitionList = ['transition', 'trnasititon-property', 'transition-duration', 'transition-timing-function', 'transition-delay', 'transition-behavior']
 const animationList = ['animation', 'animationName', 'animationDuration', 'animationTimingFunction', 'animationDelay', 'animationIterationCount', 'animationDirection', 'animationFillMode', 'animationPlayState']
 const interactivityList = ['cursor', 'pointerEvents', 'userSelect', 'tabIndex']
 const mediaList = ['objectFit', 'resize']
-const listPropertyList = ['listStyle', 'listStyleType', 'listStyleImage', 'listStylePosition']
+const listPropertyList = ['listStyle', 'listStyleType', 'listStyleImage', 'listStylePosition', 'counterReset', 'counterIncrement']
 const miscList = ['whiteSpace', 'all']
 const customCssList = ['easing']
 const flexItems = ['order', 'flex', 'flexGrow', 'flexShrink', 'flexBasis', 'alignSelf', 'justifySelf']
@@ -252,6 +256,11 @@ export const onEventAllList = [...mouseEvent, ...keyboardEvent, ...focusEvent, .
 
 export const onEventAllSet = new Set(onEventAllList)
 
+const pseudoPropertyList = ['content']
+const pseudoElementContent = ['after, before, marker']
+const pseudoElementBrowser = ['-webkit-scrollbar']
+const pseudoBrowserPropertyList = ['scrollbar-width', 'scrollbar-color', 'scrollbar-highlight-color', 'scrollbar-face-color', 'scrollbar-track-color', 'scrollbar-arrow-color', 'scrollbar-shadow-color', 'scrollbar-3dlight-color', 'scrollbar-darkshadow-color']
+
 export const tableTag = {
     list: tableTagList,
     set: tableTagSet,
@@ -313,8 +322,8 @@ export const mergedFlexProperty = {
 }
 
 export const mergedGridProperty = {
-    list: [...basePropertyList, gridPropertyList],
-    set: new Set([...basePropertyList, gridPropertyList]),
+    list: [...basePropertyList, ...gridPropertyList],
+    set: new Set([...basePropertyList, ...gridPropertyList]),
 }
 
 export const mergedTableProperty = {

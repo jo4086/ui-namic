@@ -2,7 +2,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "@core": ["src/index.js*"],
+            "@core": ["src/index.js"],
             "@debug": ["../debug/src/index.js"]
         },
         "jsx": "react-jsx"

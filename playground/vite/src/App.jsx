@@ -13,23 +13,39 @@ function App() {
     const [count, setCount] = useState(0)
 
     return (
-        <Box {...style1} dynamicStyle={boxStyle4}>
-            <div>
+        <Box className="container" dynamicStyle={boxStyle4}>
+            <Box style={{ flexDirection: 'column', display: 'flex', justifyContent: 'center', padding: '0', content: 'hiddasdasd' }}>
                 <a href="https://vite.dev" target="_blank">
                     <img src={viteLogo} className="logo" alt="Vite logo" />
                 </a>
                 <a href="https://react.dev" target="_blank">
                     <img src={reactLogo} className="logo react" alt="React logo" />
                 </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-                <p>
-                    Edit <code>src/App.jsx</code> and save to test HMR
+            </Box>
+            <Box>
+                <blockquote>
+                    이건 인용문이야.
+                    <blockquote>이건 중첩 인용이야.</blockquote>
+                    끝났어
+                </blockquote>
+                <div className="div1">
+                    이건 인용문이야.
+                    <div className="div1_1">이건 중첩 인용이야.</div>
+                    끝났어
+                </div>
+            </Box>
+            <Box style={{ display: 'grid', justifyContent: 'center', backgroundColor: 'gray', padding: '10px' }}>
+                <h1>Vite + React</h1>
+                <div className="card">
+                    <Button onClick={() => setCount((count) => count + 1)}>count is {count}</Button>
+                    <p>
+                        Edit <code>src/App.jsx</code> and save to test HMR
+                    </p>
+                </div>
+                <p style={{ color: 'red' }} className="read-the-docs">
+                    Click on the Vite and React logos to learn more
                 </p>
-            </div>
-            <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+            </Box>
         </Box>
     )
 
@@ -68,21 +84,23 @@ const commonStyle = { one: '0.5s ease 1' }
 
 const boxStyle4 = {
     userSelect: 'none',
+    gap: '20px',
     color: 'black',
     fontSize: '20px',
     border: '1px solid black',
     outline: 0,
-    width: '500px',
-    margin: '30px auto 0 30px',
+    // width: '500px',
+    // margin: '30px auto 0 30px',
     backgroundColor: 'white',
-    justifyContent: 'end',
-    padding: '0 20px',
+    // justifyContent: 'end',
+    // padding: '0 20px',
     boxSizing: 'border-box',
     textAlign: 'right',
     transition: [`color ${commonStyle.one}`, `background-color ${commonStyle.one}`],
-    cursor: 'pointer',
-    whiteSpace: 'nowrap',
+    // cursor: 'pointer',
+    // whiteSpace: 'nowrap',
     position: 'relative',
+    // width: 'auto',
 
     keyframes: {
         move: {

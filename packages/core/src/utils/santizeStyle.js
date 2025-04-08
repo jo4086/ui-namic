@@ -14,9 +14,12 @@ function santizeStyle(config) {
 
     const { displayGroup, patchDisplay } = normalizeDisplay(type, display)
 
+    console.log('displayGroup:', displayGroup)
+    console.log('patchDisplay:', patchDisplay)
+
     const { primitiveProps, referenceProps } = dataType(formatData)
-    // console.log('primitiveProps:', primitiveProps)
-    // console.log('referenceProps:', referenceProps)
+    console.log('primitiveProps:', primitiveProps)
+    console.log('referenceProps:', referenceProps)
 
     const { cssStringProps, normalStringProps } = cssProps(primitiveProps, displayGroup)
 
@@ -197,7 +200,7 @@ const cssProps = (primitiveProps, display) => {
     const normalStringProps = {}
     // console.log('displayGroup:', display)
     const displayPropSet = displaySetMap[display]
-    // console.log('displayPropSet:', displayPropSet)
+    console.log('displayPropSet:', displayPropSet)
 
     for (const [key, value] of Object.entries(primitiveProps)) {
         if (displayPropSet.has(key)) {

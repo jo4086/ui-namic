@@ -13,7 +13,7 @@ const easingSet = new Set(['easing'])
 function normalizeStyle(props) {
     const { dynamic, keyframes, media, pseudo, ...rest } = props
 
-    logStyle('normalizeStyle Input', props, 'yellow', '1rem', 'open')
+    logStyle('normalizeStyle Input', props, 'yellow', '1rem')
 
     function safeBuild(source, builderFn) {
         return source ? builderFn(source) : null
