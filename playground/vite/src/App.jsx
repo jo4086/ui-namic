@@ -13,38 +13,45 @@ function App() {
     const [count, setCount] = useState(0)
 
     return (
-        <Box className="container" dynamicStyle={boxStyle4}>
-            <Box style={{ flexDirection: 'column', display: 'flex', justifyContent: 'center', padding: '0', content: 'hiddasdasd' }}>
-                <a href="https://vite.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </Box>
-            <Box>
-                <blockquote>
-                    이건 인용문이야.
-                    <blockquote>이건 중첩 인용이야.</blockquote>
-                    끝났어
-                </blockquote>
-                <div className="div1">
-                    이건 인용문이야.
-                    <div className="div1_1">이건 중첩 인용이야.</div>
-                    끝났어
-                </div>
-            </Box>
-            <Box style={{ display: 'grid', justifyContent: 'center', backgroundColor: 'gray', padding: '10px' }}>
-                <h1>Vite + React</h1>
-                <div className="card">
-                    <Button onClick={() => setCount((count) => count + 1)}>count is {count}</Button>
-                    <p>
-                        Edit <code>src/App.jsx</code> and save to test HMR
+        <Box>
+            <Box className="container" dynamicStyle={boxStyle4}>
+                <Box style={{ flexDirection: 'column', display: 'flex', flexWrap: '0.5', justifyContent: 'center', padding: '0', content: 'hiddasdasd' }}>
+                    <a href="https://vite.dev" target="_blank">
+                        <img src={viteLogo} className="logo" alt="Vite logo" />
+                    </a>
+                    <a href="https://react.dev" target="_blank">
+                        <img src={reactLogo} className="logo react" alt="React logo" />
+                    </a>
+                </Box>
+                <Box>
+                    <blockquote>
+                        open-quote blockquote
+                        <blockquote>open-quote 중첩 close-quote</blockquote>
+                        close-quote
+                    </blockquote>
+                    <div className="div1">
+                        open-quote div
+                        <div className="div1_1">open-quote 중첩 close-quote</div>
+                        close-quote
+                    </div>
+                </Box>
+                <Box style={{ display: 'grid', justifyContent: 'center', backgroundColor: 'gray', padding: '10px' }}>
+                    <h1>Vite + React</h1>
+                    <div className="card" style={{ position: 'relative' }}>
+                        <Button dynamicStyle={pseudoStyle} dynamicType="onClick" onClick={() => setCount((count) => count + 1)}>
+                            count is {count}
+                        </Button>{' '}
+                        {/* <Button dynamicStyle={{ dynamic: { backgroundColor: 'blue' } }} dynamicType="onClick" onClick={() => setCount((count) => count + 1)}>
+                            count is {count}
+                        </Button> */}
+                        <p>
+                            Edit <code>src/App.jsx</code> and save to test HMR
+                        </p>
+                    </div>
+                    <p style={{ color: 'red' }} className="read-the-docs">
+                        Click on the Vite and React logos to learn more
                     </p>
-                </div>
-                <p style={{ color: 'red' }} className="read-the-docs">
-                    Click on the Vite and React logos to learn more
-                </p>
+                </Box>
             </Box>
         </Box>
     )
@@ -79,8 +86,40 @@ function App() {
 }
 
 export default App
-
 const commonStyle = { one: '0.5s ease 1' }
+
+const pseudoStyle = {
+    fontSize: '2rem',
+    dynamic: {
+        backgroundColor: 'cyan',
+        color: 'black',
+    },
+    pseudo: {
+        hover: {
+            color: 'green',
+            backgroundColor: 'black',
+        },
+        after: {
+            position: 'absolute',
+            content: '"hello"',
+            left: '30px',
+            top: '3px',
+            fontSize: '16px',
+            transition: [`left ${commonStyle.one}`, `top ${commonStyle.one}`, `fontSize ${commonStyle.one}`],
+        },
+        before: {
+            // color: 'red',
+            position: 'absolute',
+            content: '"Click to Change Opacity"',
+            right: '-220px',
+            top: '0px',
+            transition: [`left ${commonStyle.one}`, `top ${commonStyle.one}`, `fontSize ${commonStyle.one}`],
+        },
+        focus: {
+            outline: 'none',
+        },
+    },
+}
 
 const boxStyle4 = {
     userSelect: 'none',
@@ -96,7 +135,7 @@ const boxStyle4 = {
     // padding: '0 20px',
     boxSizing: 'border-box',
     textAlign: 'right',
-    transition: [`color ${commonStyle.one}`, `background-color ${commonStyle.one}`],
+    transition: [{ name: 'color, background-color', value: '0.5s ease 1' }, 'font-size 1s ease-in-out 1'],
     // cursor: 'pointer',
     // whiteSpace: 'nowrap',
     position: 'relative',
@@ -105,17 +144,17 @@ const boxStyle4 = {
     keyframes: {
         move: {
             duration: '3s',
-            iteration: 1,
-            timingFunction: 'ease',
+            iteration: 5,
+            timingFunction: 'ease-in-out',
             percent: {
-                0: { transform: 'translateX(0%)', opacity: 1, easing: 'ease-in' },
-                15: { transform: 'translateX(50%)', opacity: 0, easing: 'ease-in-out' },
-                70: { transform: 'translateX(75%)', opacity: 0.5, easing: 'linear' },
-                100: { transform: 'translateX(50%)', opacity: 0, cursor: 'default', easing: 'ease-out' },
+                0: { transform: 'translateX(0%)', opacity: 0, easing: 'ease-in' },
+                // 15: { transform: 'translateX(50%)', opacity: 0.3, easing: 'ease-in-out' },
+                // 70: { transform: 'translateX(75%)', opacity: 0.7, easing: 'linear' },
+                100: { transform: 'translateX(50%)', opacity: 1, cursor: 'default', easing: 'ease-out' },
             },
         },
         scale: {
-            animation: '3s 5 ease-in',
+            animation: '3s 5 ease-in-out',
             percent: {
                 0: { transform: 'scale(1)' },
                 100: { transform: 'scale(1.5)' },
@@ -138,28 +177,6 @@ const boxStyle4 = {
             { point: 1280, width: '300px', height: '100px' },
         ],
         advanced: [{ query: 'screen, (min-width: 768px) and (max-width: 1023px)', width: '300px' }],
-    },
-
-    pseudo: {
-        hover: {
-            color: 'green',
-            backgroundColor: 'black',
-        },
-        after: {
-            position: 'absolute',
-            content: '"hello"',
-            left: '30px',
-            top: '3px',
-            fontSize: '16px',
-            transition: [`left ${commonStyle.one}`, `top ${commonStyle.one}`, `fontSize ${commonStyle.one}`],
-        },
-        before: {
-            color: 'red',
-            position: 'absolute',
-            content: '"Click to Change Opacity"',
-            right: '-220px',
-            top: '0px',
-        },
     },
 
     dynamic: {

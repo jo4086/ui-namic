@@ -1,6 +1,5 @@
 import { defineConfig } from 'tsup'
 
-
 export default defineConfig({
     entry: ['src/index.js'],
     format: ['esm', 'cjs'],
@@ -11,4 +10,7 @@ export default defineConfig({
     treeshake: true,
     minify: false,
     external: [],
+    env: {
+        NODE_ENV: 'production', // 👈 tsup 빌드시 환경변수 지정 가능
+    },
 })

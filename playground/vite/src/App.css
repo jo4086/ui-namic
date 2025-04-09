@@ -42,7 +42,7 @@
 }
 
 blockquote {
-    quotes: '1-1' '1-2' '2-1' '2-2';
+    quotes: '"' '"' "'" "'";
 }
 
 blockquote::before {
@@ -64,7 +64,7 @@ blockquote blockquote::after {
 }
 
 div.div1 {
-    quotes: '1-start' '1-end' '2-start' '2-end';
+    quotes: '"' '"' "'" "'";
 }
 div.div1::before {
     content: open-quote;

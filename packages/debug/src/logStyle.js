@@ -7,6 +7,7 @@ const colorMap = {
     none: { bg: 'none', color: 'inherit' },
     skyblue: { bg: 'skyblue', color: 'black' },
     lightGreen: { bg: 'lightGreen', color: 'black' },
+    cyan: { bg: 'cyan', color: 'black' },
 
     purple100: { bg: '#f3e8ff', color: '#3b0764' },
     purple200: { bg: '#e9d5ff', color: '#3b0764' },

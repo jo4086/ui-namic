@@ -14,6 +14,8 @@ function createItem(config) {
 
         const { isAllowChild, tag: Tag, baseProps, children } = renderData
 
+        // console.log('baseProps:', baseProps)
+
         const renderTagWithoutChildren = () => <Tag {...baseProps} />
         const renderTagWithChildren = () => <Tag {...baseProps}>{children}</Tag>
 

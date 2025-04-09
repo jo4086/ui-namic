@@ -23,6 +23,7 @@
     "license": "MIT",
     "packageManager": "pnpm@10.7.0",
     "devDependencies": {
+        "dotenv": "^16.4.7",
         "tsup": "^8.4.0"
     },
     "peerDependencies": {
