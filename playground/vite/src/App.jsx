@@ -15,7 +15,7 @@ function App() {
     return (
         <Box>
             <Box className="container" dynamicStyle={boxStyle4}>
-                <Box style={{ flexDirection: 'column', display: 'flex', flexWrap: '0.5', justifyContent: 'center', padding: '0', content: 'hiddasdasd' }}>
+                <Box style={{ flexDirection: 'column', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: '0', content: '"hiddasdasd"' }}>
                     <a href="https://vite.dev" target="_blank">
                         <img src={viteLogo} className="logo" alt="Vite logo" />
                     </a>
@@ -105,7 +105,7 @@ const pseudoStyle = {
             left: '30px',
             top: '3px',
             fontSize: '16px',
-            transition: [`left ${commonStyle.one}`, `top ${commonStyle.one}`, `fontSize ${commonStyle.one}`],
+            transition: [`left ${commonStyle.one}`, `top ${commonStyle.one}`, `font-size ${commonStyle.one}`],
         },
         before: {
             // color: 'red',
@@ -113,7 +113,7 @@ const pseudoStyle = {
             content: '"Click to Change Opacity"',
             right: '-220px',
             top: '0px',
-            transition: [`left ${commonStyle.one}`, `top ${commonStyle.one}`, `fontSize ${commonStyle.one}`],
+            transition: [`left ${commonStyle.one}`, `top ${commonStyle.one}`, `font-size ${commonStyle.one}`],
         },
         focus: {
             outline: 'none',

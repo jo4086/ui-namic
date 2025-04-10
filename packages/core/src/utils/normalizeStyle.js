@@ -5,40 +5,29 @@ import { forEachObject, forEachNestedObject } from './shared'
 import { insertStyleOnce } from './insertStyleOnce.js'
 import { logStyle } from '@debug'
 import { pseudoClassSet, pseudoElementSet } from './constants'
+import buildKeyframesModule from './builds/buildKeyframesModule'
 
 const animationPropertyList = ['duration', 'easing', 'delay', 'iteration', 'direction', 'fillMode', 'playState']
 const animationPropertySet = new Set(animationPropertyList)
 const easingSet = new Set(['easing'])
 
-function normalizeStyle(props, className) {
+function normalizeStyle(props, META) {
     const { dynamic, keyframes, media, pseudo, ...rest } = props
-    const dynamicClassName = `${className}.--UINAMIC--dynamic`
-
-    logStyle('props', props, 'cyan', '1rem')
-
-    // logStyle('normalizeStyle Input', props, 'yellow', '1rem')
 
     function safeBuild(source, builderFn) {
         return source ? builderFn(source) : null
     }
 
-    const updateObject = {}
-    forEachObject(props, (key, value) => {
-        if (typeof value === 'object' && !Array.isArray(value)) {
-            const inner = Object.entries(value).sort(([a], [z]) => a.localeCompare(z))
+    const keyframesModule = safeBuild(keyframes, buildKeyframesModule)
 
-            updateObject[key] = Object.fromEntries(inner)
-        } else {
-            updateObject[key] = value
-        }
-    })
     const mergedBlocks = []
+
+    const mediaModule = safeBuild(media, buildMediaBundle)
+    console.log('mediaModule:', mediaModule)
 
     const keyframeBundle = safeBuild(keyframes, buildKeyframesBundle)
     const keyframeStringBlock = keyframeBundle?.inlineStyle
     const keyframeArrayBlock = keyframeBundle?.styleBlocks
-
-    console.log('keyframeArrayBlock', keyframeArrayBlock)
 
     const mergedStyle = {
         ...rest,
@@ -53,7 +42,7 @@ function normalizeStyle(props, className) {
         mergedBlocks.push(...pseudoBlocks)
     }
 
-    insertStyleOnce(`.${className}`, mergedBlocks)
+    insertStyleOnce(META.selectorBase, mergedBlocks)
     if (keyframeArrayBlock?.length > 0) {
         for (const block of keyframeArrayBlock) {
             if (block.type === 'keyframes') {
@@ -74,7 +63,7 @@ function normalizeStyle(props, className) {
         console.log('mergedStyle:', mergedStyle)
         mergedBlocks.push(` {\n${flatBlock}\n}`)
 
-        insertStyleOnce(`.${dynamicClassName}`, mergedBlocks)
+        insertStyleOnce(META.selectorDynamic, mergedBlocks)
     }
 }
 
@@ -119,19 +108,6 @@ const buildPseudoBundle = (pseudo) => {
 
     return blocks
 }
-
-// const buildPseudoBundle = (pseudo) => {
-//     const pseudoClassBlcoks = {}
-//     const selectorBlock = {}
-//     forEachNestedObject(pseudo, (selector, prop, value) => {
-//         if (pseudoClassSet.has(selector)) {
-//             pseudoClassBlcoks[selector] = value
-//         } else if (pseudoElementSet.has(selector)) {
-//         }
-//     })
-
-//     console.log('pseudoClassBlcoks:', pseudoClassBlcoks)
-// }
 
 // 3차버전
 function buildMediaBundle(media) {
@@ -197,8 +173,6 @@ function buildCssBlock(string) {
         blocks.push(block)
     })
 
-    // console.log('blocks', blocks.join('\n'))
-
     return blocks.join('\n')
 }
 
@@ -251,223 +225,4 @@ function buildKeyframesBundle(keyframes) {
     }
     console.log('keyframesAnalyze(keyframes):', keyframesAnalyze(keyframes))
     return keyframesAnalyze(keyframes)
-}
-
-// function buildKeyframesBundle(keyframes) {
-//     /**
-//      * buildKeyframesBundle - Generates CSS animation and @keyframes from JS object input.
-//      *
-//      * 🔹 Main Function
-//      *   - keyframesAnalyze
-//      *
-//      * 🔸 Sub Function
-//      *   - exAnimation
-//      *   - nonAnimation
-//      *   - generateKeyframesCss
-//      *
-//      * 🔧 Assist Item
-//      *   - animationPropertyList
-//      *   - animationPropertySet
-//      *   - easingSet
-//      * ✅ return { animation, css }
-//      */
-
-//     console.log('keyframes:', keyframes)
-
-//     const exAnimation = (name, value) => {
-//         const animation = `${name} ${value.animation}`
-
-//         return animation
-//     }
-
-//     const nonAnimation = (name, value) => {
-//         const animationProperty = {}
-
-//         forEachObject(value, (innerKey, innerValue) => {
-//             if (animationPropertySet.has(innerKey)) {
-//                 animationProperty[innerKey] = innerValue
-//             }
-//         })
-
-//         const orderedValues = animationPropertyList.map((key) => animationProperty[key]).filter((value) => value !== undefined)
-
-//         const animation = [name, ...orderedValues].join(' ')
-
-//         return animation
-//     }
-
-//     const generateKeyframesCss = (obj) => {
-//         const result = {}
-
-//         forEachNestedObject(obj, (animationName, percent, styles) => {
-//             const propertyArray = []
-
-//             forEachObject(styles, (propKey, propValue) => {
-//                 let brackPoints
-
-//                 if (easingSet.has(propKey)) {
-//                     brackPoints = 'animationTimingFunction'
-//                 } else {
-//                     brackPoints = propKey
-//                 }
-
-//                 const kebabKey = camelToKebab(brackPoints)
-//                 propertyArray.push(`${kebabKey}: ${propValue};`)
-//             })
-
-//             const block = `    ${percent}% {\n        ${propertyArray.join('\n        ')}\n    }`
-
-//             if (!result[animationName]) result[animationName] = []
-//             result[animationName].push(block)
-//         })
-
-//         const patchResult = Object.entries(result)
-//             .map(([name, blocks]) => `@keyframes ${name} {\n${blocks.join('\n')}\n}`)
-//             .join('\n\n')
-
-//         return patchResult
-//     }
-
-//     function keyframesAnalyze(obj) {
-//         const animationArray = []
-//         const brackPointsframes = {}
-
-//         console.log('obj:', obj)
-
-//         forEachObject(obj, (key, value) => {
-//             const getAnimation = typeof value.animation === 'string' ? exAnimation(key, value) : nonAnimation(key, value)
-
-//             animationArray.push(getAnimation)
-
-//             brackPointsframes[key] = value.percent
-//         })
-
-//         const animation = 'animation: ' + animationArray.join(', ')
-//         const css = generateKeyframesCss(brackPointsframes)
-
-//         // console.log('%cAnimation', 'font-weight:bold', '\n' + animation)
-//         // console.log('%cCSS', 'font-weight:bold', '\n' + css)
-
-//         return { animation, css }
-//     }
-
-//     const result = keyframesAnalyze(keyframes)
-
-//     return result
-// }
-
-/* 
-  const exAnimation = (name, value) => {
-        const animation = `${name} ${value.animation}`
-
-        return animation
-    }
-
-    const nonAnimation = (name, value) => {
-        const animationProperty = {}
-
-        forEachObject(value, (innerKey, innerValue) => {
-            if (animationPropertySet.has(innerKey)) {
-                animationProperty[innerKey] = innerValue
-            }
-        })
-
-        const orderedValues = animationPropertyList.map((key) => animationProperty[key]).filter((value) => value !== undefined)
-
-        const animation = [name, ...orderedValues].join(' ')
-
-        return animation
-    }
-
-    const generateKeyframesCss = (obj) => {
-        const result = {}
-
-        forEachNestedObject(obj, (animationName, percent, styles) => {
-            const propertyArray = []
-
-            forEachObject(styles, (propKey, propValue) => {
-                let brackPoints
-
-                if (easingSet.has(propKey)) {
-                    brackPoints = 'animationTimingFunction'
-                } else {
-                    brackPoints = propKey
-                }
-
-                const kebabKey = camelToKebab(brackPoints)
-                propertyArray.push(`${kebabKey}: ${propValue};`)
-            })
-
-            const block = `    ${percent}% {\n        ${propertyArray.join('\n        ')}\n    }`
-
-            if (!result[animationName]) result[animationName] = []
-            result[animationName].push(block)
-        })
-
-        const patchResult = Object.entries(result)
-            .map(([name, blocks]) => `@keyframes ${name} {\n${blocks.join('\n')}\n}`)
-            .join('\n\n')
-
-        return patchResult
-    }
-
-    function keyframesAnalyze(obj) {
-        const animationArray = []
-        const brackPointsframes = {}
-
-        console.log('obj:', obj)
-
-        forEachObject(obj, (key, value) => {
-            const getAnimation = typeof value.animation === 'string' ? exAnimation(key, value) : nonAnimation(key, value)
-
-            animationArray.push(getAnimation)
-
-            brackPointsframes[key] = value.percent
-        })
-
-        const animation = 'animation: ' + animationArray.join(', ')
-        const css = generateKeyframesCss(brackPointsframes)
-
-        console.log('%cAnimation', 'font-weight:bold', '\n' + animation)
-        console.log('%cCSS', 'font-weight:bold', '\n' + css)
-
-        return { animation, css }
-    }
-
-    const { animation, css } = keyframesAnalyze(keyframes)
-
-    return { animation, css }
-
-*/
-
-const specialKeySet = new Set(['pseudo', 'media', 'keyframes'])
-
-const specialKeySplit = (props) => {
-    const result = { pseudoProps: {}, mediaProps: {}, keyframesProps: {} }
-    const map = {
-        pseudo: result.pseudoProps,
-        media: result.mediaProps,
-        keyframes: result.keyframesProps,
-    }
-
-    // console.log('map:', map)
-
-    for (const [key, value] of Object.entries(props)) {
-        if (specialKeySet.has(key)) {
-            map[key][key] = value
-        }
-    }
-
-    const filteredResult = Object.fromEntries(Object.entries(result).filter(([_, value]) => Object.keys(value).length > 0))
-
-    return filteredResult
-}
-
-const objectToCss = (obj) => {
-    const result = Object.entries(obj).map(([key, value]) => {
-        const cssKey = camelToKebab(key)
-        return `${cssKey}: ${value};`
-    })
-
-    return result.join(`\n`)
 }

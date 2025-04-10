@@ -1,3 +1,5 @@
+import { prefix } from '@debug'
+
 // 안정적으로 stringify
 function stableStringify(obj) {
     if (Array.isArray(obj)) {
@@ -20,9 +22,24 @@ function hashString(str) {
 }
 
 // 중첩 객체 → 고유 ID 반환
-export function generateObjectId(obj) {
-    const stable = stableStringify(obj)
-    return hashString(stable) // 고정된 ID
+export function generateMetadata(obj, type) {
+    const tagToClassPrefix = {
+        button: 'Button',
+        div: 'Box',
+        input: 'InputField',
+    }
+
+    const typeName = tagToClassPrefix[type] || 'Element'
+
+    const uniqueId = hashString(stableStringify(obj))
+
+    const baseClassName = `${prefix}_${typeName}_${uniqueId}`
+    const dynamicClassName = `--${prefix}--dynamic`
+    const fullClassName = `${baseClassName} ${dynamicClassName}`
+    const selectorBase = `.${baseClassName}`
+    const selectorDynamic = `.${baseClassName}.${dynamicClassName}`
+
+    return { uniqueId, baseClassName, dynamicClassName, fullClassName, selectorBase, selectorDynamic }
 }
 
 function safeStableStringify(obj, seen = new WeakSet()) {

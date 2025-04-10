@@ -3,13 +3,13 @@
 import { santizeStyle, normalizeStyle } from '../utils'
 import useDynamicTrigger from '../hooks/useDynamicTrigger'
 import { logStyle } from '@debug'
-import { generateObjectId } from './generateObjectId'
+import { generateMetadata } from './generateMetadata'
 
 // HTML5 void 요소들 (children 허용 X)
 const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'])
 
 const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay = 'block', dynamicType: defaultDynamicType = undefined, baseStyle: defaultBaseStyle = {} } = {}) => {
-    return function GeneratedComponent({ children, type, display, dynamicType, dynamicStyle = {}, style, className, ...restProps }) {
+    return function GeneratedComponent({ children, type, display, dynamicType, dynamicStyle = {}, style, className, dynamic, media, keyframes, pseudo, ...restProps }) {
         const displayPriority = [defaultDisplay, display, dynamicStyle?.display, style?.display]
 
         const tagToClassPrefix = {
@@ -20,7 +20,17 @@ const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay
 
         const resolvedType = type || defaultType
         const resolvedDisplay = [...displayPriority].reverse().find((v) => v !== undefined)
-        const mergedStyle = { ...defaultBaseStyle, ...dynamicStyle, ...style }
+
+        const mergedStyle = {
+            ...defaultBaseStyle,
+            ...dynamicStyle,
+            ...(keyframes && { keyframes }),
+            ...(media && { media }),
+            ...(pseudo && { pseudo }),
+            ...(dynamic && { dynamic }),
+            ...style,
+        }
+
         const resolvedDynamicType = dynamicType || defaultDynamicType
         const styleProps = santizeStyle({
             type: resolvedType,
@@ -30,14 +40,10 @@ const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay
 
         const { isTriggered, handleDynamicEvent } = useDynamicTrigger({ dynamicType, onEvent: restProps[dynamicType] || null })
 
-        const typeName = tagToClassPrefix[resolvedType] || 'Element'
-        const uniqueId = generateObjectId(styleProps)
-        const baseClassName = `UINAMIC_${typeName}_${uniqueId}`
+        const META = generateMetadata(styleProps, resolvedType)
+        const componentClassName = isTriggered ? META.fullClassName : META.baseClassName
 
-        const componentClassName = `${baseClassName}${isTriggered ? ' --UINAMIC--dynamic' : ''}`.trim()
-
-        normalizeStyle(styleProps, baseClassName)
-        // console.log('styleProps:', styleProps)
+        normalizeStyle(styleProps, META)
 
         const Tag = resolvedType
         const baseProps = {
@@ -46,11 +52,6 @@ const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay
             // style: styleProps,
             ...(resolvedDynamicType ? { [resolvedDynamicType]: handleDynamicEvent } : {}),
         }
-
-        // console.log('style\n', style)
-        // console.log('restProps.style:', restProps.style)
-        // console.log('uniqueId:', uniqueId)
-        // console.log('baseProps:', baseProps)
 
         const isAllowChild = !voidElements.has(Tag) && children != null
 

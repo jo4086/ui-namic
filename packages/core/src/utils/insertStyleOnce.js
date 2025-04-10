@@ -1,4 +1,5 @@
 // @uinamic-system//insertStyleOnce.js
+import { prefix } from '@debug'
 
 const insertedStyleIds = new Set() // 글로벌 범위 캐시
 
@@ -16,7 +17,7 @@ function insertStyleOnce2(id, cssText) {
 
 export default insertStyleOnce2
 
-const STYLE_TAG_ID = '__uinamic_style__'
+const STYLE_TAG_ID = `__${prefix}_style__`
 let styleTag = null
 const insertedClassNames = new Set()
 
