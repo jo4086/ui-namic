@@ -4,6 +4,8 @@ import { santizeStyle, normalizeStyle } from '../utils'
 import useDynamicTrigger from '../hooks/useDynamicTrigger'
 import { logStyle } from '@debug'
 import { generateMetadata } from './generateMetadata'
+import normalizeBaseStyle from './normalizeBaseStyle'
+import normalizeDom from './normalizeDOM'
 
 // HTML5 void 요소들 (children 허용 X)
 const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'])
@@ -11,12 +13,6 @@ const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img',
 const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay = 'block', dynamicType: defaultDynamicType = undefined, baseStyle: defaultBaseStyle = {} } = {}) => {
     return function GeneratedComponent({ children, type, display, dynamicType, dynamicStyle = {}, style, className, dynamic, media, keyframes, pseudo, ...restProps }) {
         const displayPriority = [defaultDisplay, display, dynamicStyle?.display, style?.display]
-
-        const tagToClassPrefix = {
-            button: 'Button',
-            div: 'Box',
-            input: 'InputField',
-        }
 
         const resolvedType = type || defaultType
         const resolvedDisplay = [...displayPriority].reverse().find((v) => v !== undefined)
@@ -43,6 +39,7 @@ const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay
         const META = generateMetadata(styleProps, resolvedType)
         const componentClassName = isTriggered ? META.fullClassName : META.baseClassName
 
+        normalizeDom(styleProps, META)
         normalizeStyle(styleProps, META)
 
         const Tag = resolvedType

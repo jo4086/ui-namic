@@ -38,8 +38,10 @@ export function generateMetadata(obj, type) {
     const fullClassName = `${baseClassName} ${dynamicClassName}`
     const selectorBase = `.${baseClassName}`
     const selectorDynamic = `.${baseClassName}.${dynamicClassName}`
+    const keyfraemsName = `@keyframes ${baseClassName}_`
+    const dynamicKeyfraemsName = `@keyframes ${baseClassName}_dynamic_`
 
-    return { uniqueId, baseClassName, dynamicClassName, fullClassName, selectorBase, selectorDynamic }
+    return { uniqueId, baseClassName, dynamicClassName, fullClassName, selectorBase, selectorDynamic, keyfraemsName, dynamicKeyfraemsName }
 }
 
 function safeStableStringify(obj, seen = new WeakSet()) {

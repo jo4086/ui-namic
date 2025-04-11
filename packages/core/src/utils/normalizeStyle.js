@@ -6,6 +6,11 @@ import { insertStyleOnce } from './insertStyleOnce.js'
 import { logStyle } from '@debug'
 import { pseudoClassSet, pseudoElementSet } from './constants'
 import buildKeyframesModule from './builds/buildKeyframesModule'
+import buildMediaModule from './builds/buildMediaModule'
+import buildPseudoModule from './builds/buildPseudoModule'
+import { insertBaseStyleOnce } from './insertDOMStyleOnce'
+import normalizeBaseStyle from './normalizeBaseStyle'
+import normalizeDynamicStyle from './normalizeDynamicStyle'
 
 const animationPropertyList = ['duration', 'easing', 'delay', 'iteration', 'direction', 'fillMode', 'playState']
 const animationPropertySet = new Set(animationPropertyList)
@@ -14,42 +19,81 @@ const easingSet = new Set(['easing'])
 function normalizeStyle(props, META) {
     const { dynamic, keyframes, media, pseudo, ...rest } = props
 
+    const { media: DMedia, keyframes: DKeyframes, pseudo: DPseudo, ...DString } = dynamic || {}
+
+    const dynamicProps = {}
+    if (DString && Object.keys(DString).length) dynamicProps.string = DString
+    if (DMedia) dynamicProps.media = DMedia
+    if (DKeyframes) dynamicProps.keyframes = DKeyframes
+    if (DPseudo) dynamicProps.pseudo = DPseudo
+
+    if (Object.keys(dynamicProps).length > 0) normalizeDynamicStyle(dynamicProps, META)
+
+    // const DMedia = dynamic?.media
+    // const DKeyframes = dynamic?.keyframes
+    // const DPseudo = dynamic?.pseudo
+
+    // console.log('DMedia', DMedia, 'DKeyframes', DKeyframes, 'DPseudo', DPseudo)
+
+    const baseProps = {
+        string: rest,
+    }
+    if (media) baseProps.media = media
+    if (pseudo) baseProps.pseudo = pseudo
+    if (keyframes) baseProps.keyframes = keyframes
+
+    normalizeBaseStyle(baseProps, META)
+    // normalizeDynamicStyle(dynamic, META)
+
     function safeBuild(source, builderFn) {
         return source ? builderFn(source) : null
     }
 
-    const keyframesModule = safeBuild(keyframes, buildKeyframesModule)
+    function safeBuild2(source, META, builderFn) {
+        return source ? builderFn(source, META) : null
+    }
+
+    const keyframesModule = safeBuild2(keyframes, META, buildKeyframesModule)
+    // console.log('keyframesMoluled:', keyframesModule)
+    const mediaModule = safeBuild2(media, META, buildMediaModule)
+    // console.log('mediaModule:', mediaModule)
+    const pseudoModule = safeBuild2(pseudo, META, buildPseudoModule)
+    // console.log('pseudoModule:', pseudoModule)
+    // insertBaseStyleOnce(pseudoModule.name, pseudoModule.css)
+
+    if (!!pseudoModule) {
+        for (const block of pseudoModule) {
+            insertBaseStyleOnce(block.name, block.css)
+        }
+    }
 
     const mergedBlocks = []
 
-    const mediaModule = safeBuild(media, buildMediaBundle)
-    console.log('mediaModule:', mediaModule)
-
-    const keyframeBundle = safeBuild(keyframes, buildKeyframesBundle)
-    const keyframeStringBlock = keyframeBundle?.inlineStyle
-    const keyframeArrayBlock = keyframeBundle?.styleBlocks
+    // const keyframeBundle = safeBuild(keyframes, buildKeyframesBundle)
+    // const keyframeStringBlock = keyframeBundle?.inlineStyle
+    // const keyframeArrayBlock = keyframeBundle?.styleBlocks
 
     const mergedStyle = {
         ...rest,
-        ...keyframeStringBlock,
+        // ...keyframeStringBlock,
     }
     const flatBlock = buildCssBlock(mergedStyle)
     mergedBlocks.push(` {\n${flatBlock}\n}`)
 
     // Build
-    if (!!pseudo) {
-        const pseudoBlocks = safeBuild(pseudo, buildPseudoBundle)
-        mergedBlocks.push(...pseudoBlocks)
-    }
+    // if (!!pseudo) {
+    //     const pseudoBlocks = safeBuild(pseudo, buildPseudoBundle)
+    //     mergedBlocks.push(...pseudoBlocks)
+    // }
 
     insertStyleOnce(META.selectorBase, mergedBlocks)
-    if (keyframeArrayBlock?.length > 0) {
-        for (const block of keyframeArrayBlock) {
-            if (block.type === 'keyframes') {
-                insertStyleOnce(`@keyframes ${block.name}`, block.css, { raw: true })
-            }
-        }
-    }
+    // if (keyframeArrayBlock?.length > 0) {
+    //     for (const block of keyframeArrayBlock) {
+    //         if (block.type === 'keyframes') {
+    //             insertStyleOnce(`@keyframes ${block.name}`, block.css, { raw: true })
+    //         }
+    //     }
+    // }
     if (!!dynamic) {
         const dynamicBundle = safeBuild(dynamic, buildDynamicBundle)
         const stringBlock = dynamicBundle?.stringBlock
@@ -60,7 +104,7 @@ function normalizeStyle(props, META) {
             ...stringBlock,
         }
         const flatBlock = buildCssBlock(mergedStyle)
-        console.log('mergedStyle:', mergedStyle)
+        // console.log('mergedStyle:', mergedStyle)
         mergedBlocks.push(` {\n${flatBlock}\n}`)
 
         insertStyleOnce(META.selectorDynamic, mergedBlocks)
@@ -87,7 +131,7 @@ const buildDynamicBundle = (dynamic) => {
         }
     }
 
-    console.log('dynamic stringBlock:', stringBlock)
+    // console.log('dynamic stringBlock:', stringBlock)
     return { stringBlock, objBlock }
 }
 
@@ -103,8 +147,6 @@ const buildPseudoBundle = (pseudo) => {
             blocks.push(`::${selector} {\n${cssBody}\n}`)
         }
     })
-
-    console.log('blocks', blocks)
 
     return blocks
 }
@@ -156,7 +198,7 @@ function buildMediaBundle(media) {
         }
     })
 
-    console.log(result)
+    // console.log(result)
 
     return result
 }
@@ -223,6 +265,6 @@ function buildKeyframesBundle(keyframes) {
             styleBlocks: generateKeyframesCss(frames),
         }
     }
-    console.log('keyframesAnalyze(keyframes):', keyframesAnalyze(keyframes))
+    // console.log('keyframesAnalyze(keyframes):', keyframesAnalyze(keyframes))
     return keyframesAnalyze(keyframes)
 }

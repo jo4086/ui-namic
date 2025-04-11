@@ -11,7 +11,7 @@ function insertStyleOnce2(id, cssText) {
     document.head.appendChild(style)
 
     insertedStyleIds.add(id)
-    console.log('insertStyleIds:', insertedStyleIds)
+    // console.log('insertStyleIds:', insertedStyleIds)
 }
 
 export default insertStyleOnce2

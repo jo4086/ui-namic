@@ -1,8 +1,9 @@
-import { camelToKebab } from "../shared"
+import { camelToKebab } from '../shared'
+import { forEachObject } from '../shared'
 
 const INDENT = '    '
 
-export default function buildBaseModule(string) {
+export const buildBaseModule = (string) => {
     const blocks = []
 
     forEachObject(string, (key, value) => {
@@ -14,3 +15,5 @@ export default function buildBaseModule(string) {
 
     return blocks.join('\n')
 }
+
+export default buildBaseModule

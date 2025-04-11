@@ -56,11 +56,11 @@ export function logStyle(label, value, background, fontSize, isOpen) {
     if (value && typeof value === 'object' && !Array.isArray(value)) {
         for (const key in value) {
             if (Object.prototype.hasOwnProperty.call(value, key)) {
-                console.log(`${key}:`, value[key])
+                // console.log(`${key}:`, value[key])
             }
         }
     } else {
-        console.log(value)
+        // console.log(value)
     }
 
     console.groupEnd()
@@ -68,7 +68,7 @@ export function logStyle(label, value, background, fontSize, isOpen) {
 
 // export function logStyle(label, value, color, background, fontSize) {
 //     // if (!isDev) return
-//     console.log('isDEV, isDebug:', isDev, isDebug)
+//     // console.log('isDEV, isDebug:', isDev, isDebug)
 
 //     if (!isDev || !isDebug) return
 //     const stack = new Error().stack
@@ -90,7 +90,7 @@ export function logStyle(label, value, background, fontSize, isOpen) {
 //     const name = `${icon} ${label}`
 
 //     console.groupCollapsed(`%c${name}`, style, `.${fileLabel}`)
-//     console.log(value)
+//     // console.log(value)
 //     console.groupEnd()
 // }
 
@@ -100,6 +100,6 @@ export function logStyle2({ label, value, color = 'white', background = 'black',
     const style = `color:${color};background:${background};font-size:${fontSize};padding:5px 10px 5px 3px;border-radius:4px`
     const name = `${icon} ${label}`
     console.groupCollapsed(`%c${name}`, style)
-    console.log(value)
+    // console.log(value)
     console.groupEnd()
 }

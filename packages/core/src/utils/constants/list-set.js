@@ -256,10 +256,47 @@ export const onEventAllList = [...mouseEvent, ...keyboardEvent, ...focusEvent, .
 
 export const onEventAllSet = new Set(onEventAllList)
 
-const pseudoPropertyList = ['content']
-const pseudoElementContent = ['after, before, marker']
-const pseudoElementBrowser = ['-webkit-scrollbar']
-const pseudoBrowserPropertyList = ['scrollbar-width', 'scrollbar-color', 'scrollbar-highlight-color', 'scrollbar-face-color', 'scrollbar-track-color', 'scrollbar-arrow-color', 'scrollbar-shadow-color', 'scrollbar-3dlight-color', 'scrollbar-darkshadow-color']
+export const pseudoPropertyList = ['content']
+export const pseudoPropertySet = new Set(['content'])
+export const pseudoProperty = {
+    list: pseudoPropertyList,
+    set: pseudoPropertySet,
+}
+
+export const pseudoElementContentList = ['after', 'before', 'marker']
+export const pseudoElementContentSet = new Set(pseudoElementContentList)
+export const pseudoElementContent = {
+    list: pseudoElementContentList,
+    set: pseudoElementContentSet,
+}
+
+export const pseudoElementBrowserList = ['-webkit-scrollbar', '-webkit-scrollbar-track', '-webkit-scrollbar-thumb', '-webkit-scrollbar-corner', '-webkit-scrollbar-button', '-webkit-scrollbar-track-piece']
+export const pseudoElementBrowserSet = new Set(pseudoElementBrowserList)
+export const pseudoElementBrowser = {
+    list: pseudoElementBrowserList,
+    set: pseudoElementBrowserSet,
+}
+
+export const interactivePseudoElementList = ['-webkit-scrollbar-thumb']
+export const interactivePseudoElementSet = new Set(interactivePseudoElementList)
+export const interactivePseudoElement = {
+    list: interactivePseudoElementList,
+    set: interactivePseudoElementSet,
+}
+
+export const pseudoBrowserPropertyList = ['scrollbar-width', 'scrollbar-color', 'scrollbar-highlight-color', 'scrollbar-face-color', 'scrollbar-track-color', 'scrollbar-arrow-color', 'scrollbar-shadow-color', 'scrollbar-3dlight-color', 'scrollbar-darkshadow-color']
+export const pseudoBrowserPropertySet = new Set(pseudoBrowserPropertyList)
+export const pseudoBrowserProperty = {
+    list: pseudoBrowserPropertyList,
+    set: pseudoBrowserPropertySet,
+}
+
+export const functionalPseudoList = ['not', 'nth-child', 'nth-of-type', 'nth-last-child']
+export const functionalPseudoSet = new Set(functionalPseudoList)
+export const functionalPseudo = {
+    list: functionalPseudoList,
+    set: functionalPseudoSet,
+}
 
 export const tableTag = {
     list: tableTagList,
@@ -337,6 +374,7 @@ const propsMap = {
 
     pseudoClass,
     pseudoElement,
+    functionalPseudo,
 
     allPseudo,
     onEventAll,

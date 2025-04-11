@@ -1,6 +1,6 @@
-import { forEachObject } from "../shared"
+import { forEachObject } from '../shared'
 
-export default function buildMediaBundle(media) {
+export const buildMediaModule = (media) => {
     const positionMap = {
         up: 'min-width',
         down: 'max-width',
@@ -46,7 +46,9 @@ export default function buildMediaBundle(media) {
         }
     })
 
-    console.log(result)
+    // console.log(result)
 
     return result
 }
+
+export default buildMediaModule

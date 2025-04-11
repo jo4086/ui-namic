@@ -1,70 +1,47 @@
-import { forEachObject } from '../shared'
+import { camelToKebab } from '../shared'
+import { forEachNestedObject, forEachObject } from '../shared'
 import buildBaseModule from './buildBaseModule'
 
 // 고정된 animation 속성 리스트
-const animationPropertyList = ['duration', 'easing', 'delay', 'iteration', 'direction', 'fillMode', 'playState']
+const animationPropertyList = ['duration', 'animationDuration', 'easing', 'timingFunction', 'animationTimingFunction', 'delay', 'animationDelay', 'iteration', 'animationIterationCount', 'direction', 'animationDirection', 'fillMode', 'animationFillMode', 'playState', 'animationPlayState']
 const animationPropertySet = new Set(animationPropertyList)
 
 // JS key → CSS 속성으로 매핑
 const animationPropertyMap = {
     duration: 'animation-duration',
     easing: 'animation-timing-function',
+    timingFunction: 'animation-timing-function',
     delay: 'animation-delay',
     iteration: 'animation-iteration-count',
+    animationIterationCount: 'animation-iteration-count',
     direction: 'animation-direction',
     fillMode: 'animation-fill-mode',
     playState: 'animation-play-state',
 }
 
-export default function buildKeyframesModule(keyframes, META) {
-    console.log('keyframes:', keyframes)
-}
-
-const keyframesAnalyze = (obj) => {
+export const buildKeyframesModule = (keyframes, META) => {
     const animations = []
     const frames = {}
 
-    const exAnimation = (name, value) => `${name} ${value.animation}`
+    forEachObject(keyframes, (key, value) => {
+        const keyframeName = `${META.baseClassName}_${key}`
 
-    const nonAnimation = (name, value) => {
-        const animationProperty = {}
-
-        forEachObject(value, (k, v) => {
-            if (animationPropertySet.has(k)) {
-                animationProperty[k] = v
-            }
-        })
-
-        const orderedValues = animationPropertyList.map((k) => animationProperty[k]).filter(Boolean)
-
-        const cssStyleBlock = animationPropertyList.filter((k) => animationProperty[k] !== undefined).map((k) => `${animationPropertyMap[k]}: ${animationProperty[k]};`)
-
-        return {
-            string: [name, ...orderedValues].join(' '),
-            inline: cssStyleBlock.join(' '),
-        }
-    }
-
-    forEachObject(obj, (key, value) => {
-        const uniqueKeyframeName = `${baseClassName}__${key}`
-        const result = typeof value.animation === 'string' ? { string: exAnimation(uniqueKeyframeName, value), inline: '' } : nonAnimation(uniqueKeyframeName, value)
+        const result = typeof value.animation === 'string' ? { string: exAnimation(keyframeName, value), inline: '' } : nonAnimation(keyframeName, value)
 
         animations.push(result.string)
-        frames[uniqueKeyframeName] = value.percent
-        // 필요 시 result.inline 을 styleObj에도 넣을 수 있음
+        frames[keyframeName] = value.percent
     })
 
     return {
         inlineStyle: { animation: animations.join(', ') },
         styleBlocks: generateKeyframesCss(frames),
     }
-}
 
-// 주요 함수
-function buildKeyframesBundle(keyframes, baseClassName = '') {
-    const exAnimation = (name, value) => `${name} ${value.animation}`
+    function exAnimation(name, value) {
+        return `${name} ${value.animation}`
+    }
 
-    const nonAnimation = (name, value) => {
+    function nonAnimation(name, value) {
         const animationProperty = {}
 
         forEachObject(value, (k, v) => {
@@ -73,19 +50,19 @@ function buildKeyframesBundle(keyframes, baseClassName = '') {
             }
         })
 
-        // 문자열 animation 속성용 (이건 여전히 CSS 명명법 아님)
-        const orderedValues = animationPropertyList.map((k) => animationProperty[k]).filter(Boolean)
+        const ordered = animationPropertyList.map((k) => animationProperty[k]).filter(Boolean)
 
-        // 🔁 CSS 속성용 키-값 블록 (예: animation-timing-function: ease;)
-        const cssStyleBlock = animationPropertyList.filter((k) => animationProperty[k] !== undefined).map((k) => `${animationPropertyMap[k]}: ${animationProperty[k]};`)
+        const cssStyleBlock = Object.entries(animationProperty)
+            .map(([k, v]) => `${animationPropertyMap[k]}: ${v};`)
+            .join(' ')
 
         return {
-            string: [name, ...orderedValues].join(' '),
-            inline: cssStyleBlock.join(' '),
+            string: [name, ...ordered].join(' '),
+            inline: cssStyleBlock,
         }
     }
 
-    const generateKeyframesCss = (framesObj) => {
+    function generateKeyframesCss(framesObj) {
         const result = {}
 
         forEachNestedObject(framesObj, (name, percent, styles) => {
@@ -97,32 +74,11 @@ function buildKeyframesBundle(keyframes, baseClassName = '') {
             result[name].push(block)
         })
 
-        // 결과: [{ type: 'keyframes', name, css }]
         return Object.entries(result).map(([name, blocks]) => ({
-            type: 'keyframes',
             name,
             css: `@keyframes ${name} {\n${blocks.join('\n')}\n}`,
         }))
     }
-
-    const keyframesAnalyze = (obj) => {
-        const animations = []
-        const frames = {}
-
-        forEachObject(obj, (key, value) => {
-            const uniqueKeyframeName = `${baseClassName}__${key}`
-            const result = typeof value.animation === 'string' ? { string: exAnimation(uniqueKeyframeName, value), inline: '' } : nonAnimation(uniqueKeyframeName, value)
-
-            animations.push(result.string)
-            frames[uniqueKeyframeName] = value.percent
-            // 필요 시 result.inline 을 styleObj에도 넣을 수 있음
-        })
-
-        return {
-            inlineStyle: { animation: animations.join(', ') },
-            styleBlocks: generateKeyframesCss(frames),
-        }
-    }
-
-    return keyframesAnalyze(keyframes)
 }
+
+export default buildKeyframesModule

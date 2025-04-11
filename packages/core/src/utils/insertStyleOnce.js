@@ -1,22 +1,6 @@
 // @uinamic-system//insertStyleOnce.js
 import { prefix } from '@debug'
 
-const insertedStyleIds = new Set() // 글로벌 범위 캐시
-
-function insertStyleOnce2(id, cssText) {
-    if (insertedStyleIds.has(id)) return
-
-    const style = document.createElement('style')
-    style.setAttribute('data-style-id', id)
-    style.textContent = cssText
-    document.head.appendChild(style)
-
-    insertedStyleIds.add(id)
-    console.log('insertStyleIds:', insertedStyleIds)
-}
-
-export default insertStyleOnce2
-
 const STYLE_TAG_ID = `__${prefix}_style__`
 let styleTag = null
 const insertedClassNames = new Set()

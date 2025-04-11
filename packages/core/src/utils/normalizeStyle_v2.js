@@ -38,7 +38,7 @@ function normalizeStyle(props, className, prefix) {
     const keyframeStringBlock = keyframeBundle?.inlineStyle
     const keyframeArrayBlock = keyframeBundle?.styleBlocks
 
-    console.log('keyframeArrayBlock', keyframeArrayBlock)
+    // console.log('keyframeArrayBlock', keyframeArrayBlock)
 
     const mergedStyle = {
         ...rest,
@@ -71,7 +71,7 @@ function normalizeStyle(props, className, prefix) {
             ...stringBlock,
         }
         const flatBlock = buildCssBlock(mergedStyle)
-        console.log('mergedStyle:', mergedStyle)
+        // console.log('mergedStyle:', mergedStyle)
         mergedBlocks.push(` {\n${flatBlock}\n}`)
 
         insertStyleOnce(`.${dynamicClassName}`, mergedBlocks)
@@ -98,7 +98,7 @@ const buildDynamicBundle = (dynamic) => {
         }
     }
 
-    console.log('dynamic stringBlock:', stringBlock)
+    // console.log('dynamic stringBlock:', stringBlock)
     return { stringBlock, objBlock }
 }
 
@@ -115,7 +115,7 @@ const buildPseudoBundle = (pseudo) => {
         }
     })
 
-    console.log('blocks', blocks)
+    // console.log('blocks', blocks)
 
     return blocks
 }
@@ -130,7 +130,7 @@ const buildPseudoBundle = (pseudo) => {
 //         }
 //     })
 
-//     console.log('pseudoClassBlcoks:', pseudoClassBlcoks)
+//     // console.log('pseudoClassBlcoks:', pseudoClassBlcoks)
 // }
 
 // 3차버전
@@ -180,7 +180,7 @@ function buildMediaBundle(media) {
         }
     })
 
-    console.log(result)
+    // console.log(result)
 
     return result
 }
@@ -249,7 +249,7 @@ function buildKeyframesBundle(keyframes) {
             styleBlocks: generateKeyframesCss(frames),
         }
     }
-    console.log('keyframesAnalyze(keyframes):', keyframesAnalyze(keyframes))
+    // console.log('keyframesAnalyze(keyframes):', keyframesAnalyze(keyframes))
     return keyframesAnalyze(keyframes)
 }
 
@@ -272,7 +272,7 @@ function buildKeyframesBundle(keyframes) {
 //      * ✅ return { animation, css }
 //      */
 
-//     console.log('keyframes:', keyframes)
+//     // console.log('keyframes:', keyframes)
 
 //     const exAnimation = (name, value) => {
 //         const animation = `${name} ${value.animation}`
@@ -332,7 +332,7 @@ function buildKeyframesBundle(keyframes) {
 //         const animationArray = []
 //         const brackPointsframes = {}
 
-//         console.log('obj:', obj)
+//         // console.log('obj:', obj)
 
 //         forEachObject(obj, (key, value) => {
 //             const getAnimation = typeof value.animation === 'string' ? exAnimation(key, value) : nonAnimation(key, value)
@@ -415,7 +415,7 @@ function buildKeyframesBundle(keyframes) {
         const animationArray = []
         const brackPointsframes = {}
 
-        console.log('obj:', obj)
+        // console.log('obj:', obj)
 
         forEachObject(obj, (key, value) => {
             const getAnimation = typeof value.animation === 'string' ? exAnimation(key, value) : nonAnimation(key, value)
@@ -428,8 +428,8 @@ function buildKeyframesBundle(keyframes) {
         const animation = 'animation: ' + animationArray.join(', ')
         const css = generateKeyframesCss(brackPointsframes)
 
-        console.log('%cAnimation', 'font-weight:bold', '\n' + animation)
-        console.log('%cCSS', 'font-weight:bold', '\n' + css)
+        // console.log('%cAnimation', 'font-weight:bold', '\n' + animation)
+        // console.log('%cCSS', 'font-weight:bold', '\n' + css)
 
         return { animation, css }
     }

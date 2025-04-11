@@ -18,9 +18,9 @@ export function forEachNestedObject(obj, callback) {
 
     forEachObject(pseudo, (key, value) => {
         if (pseudoClassSet.has(key)) {
-            console.log('class-key:', key)
+            // console.log('class-key:', key)
         } else if (pseudoElementSet.has(key)) {
-            console.log('element-key:', key)
+            // console.log('element-key:', key)
         }
     })
 */
