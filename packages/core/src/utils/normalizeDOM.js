@@ -49,6 +49,7 @@ function applyStyleModules(styleProps, META, mode = 'base') {
 
         const cssBlock = buildBaseModule(merged)
         if (cssBlock && cssBlock.trim()) {
+            console.log('cssBlock:', cssBlock)
             insertBaseStyleOnce(selector, cssBlock)
         }
     }

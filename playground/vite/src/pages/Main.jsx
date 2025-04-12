@@ -6,7 +6,7 @@ const Main = () => {
         <Box>
             <Box style={{ flexDirection: 'column', padding: '10px' }}>
                 <Container>
-                    <Box></Box>
+                    <Box dyClick="font-size:2rem;"></Box>
                     <Box></Box>
                 </Container>
             </Box>

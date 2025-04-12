@@ -59,11 +59,11 @@ function normalizeStyle(props, META) {
     // console.log('pseudoModule:', pseudoModule)
     // insertBaseStyleOnce(pseudoModule.name, pseudoModule.css)
 
-    if (!!pseudoModule) {
-        for (const block of pseudoModule) {
-            insertBaseStyleOnce(block.name, block.css)
-        }
-    }
+    // if (!!pseudoModule) {
+    //     for (const block of pseudoModule) {
+    //         insertBaseStyleOnce(block.name, block.css)
+    //     }
+    // }
 
     const mergedBlocks = []
 
