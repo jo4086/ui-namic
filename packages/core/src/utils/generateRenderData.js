@@ -35,7 +35,7 @@ const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay
         })
 
         const { isTriggered, handleDynamicEvent } = useDynamicTrigger({ dynamicType, onEvent: restProps[dynamicType] || null })
-        
+
         const META = generateMetadata(styleProps, type, {
             isTriggered,
             userClassName: className,
