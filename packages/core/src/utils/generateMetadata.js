@@ -22,7 +22,7 @@ function hashString(str) {
 }
 
 // 중첩 객체 → 고유 ID 반환
-export function generateMetadata(obj, type) {
+export function generateMetadata(obj, type, options = {}) {
     const tagToClassPrefix = {
         button: 'Button',
         div: 'Box',
@@ -38,10 +38,13 @@ export function generateMetadata(obj, type) {
     const fullClassName = `${baseClassName} ${dynamicClassName}`
     const selectorBase = `.${baseClassName}`
     const selectorDynamic = `.${baseClassName}.${dynamicClassName}`
-    const keyfraemsName = `@keyframes ${baseClassName}_`
-    const dynamicKeyfraemsName = `@keyframes ${baseClassName}_dynamic_`
 
-    return { uniqueId, baseClassName, dynamicClassName, fullClassName, selectorBase, selectorDynamic, keyfraemsName, dynamicKeyfraemsName }
+    const isTriggered = options.isTriggered ?? false
+    const userClassName = options.userClassName || ''
+
+    const componentClassName = [userClassName, isTriggered ? fullClassName : baseClassName].filter(Boolean).join(' ')
+
+    return { uniqueId, baseClassName, dynamicClassName, fullClassName, selectorBase, selectorDynamic, componentClassName }
 }
 
 function safeStableStringify(obj, seen = new WeakSet()) {

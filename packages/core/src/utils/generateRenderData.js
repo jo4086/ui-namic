@@ -35,9 +35,11 @@ const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay
         })
 
         const { isTriggered, handleDynamicEvent } = useDynamicTrigger({ dynamicType, onEvent: restProps[dynamicType] || null })
-
-        const META = generateMetadata(styleProps, resolvedType)
-        const componentClassName = isTriggered ? META.fullClassName : META.baseClassName
+        
+        const META = generateMetadata(styleProps, type, {
+            isTriggered,
+            userClassName: className,
+        })
 
         normalizeDom(styleProps, META)
         normalizeStyle(styleProps, META)
@@ -45,8 +47,7 @@ const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay
         const Tag = resolvedType
         const baseProps = {
             ...restProps,
-            className: componentClassName,
-            // style: styleProps,
+            className: META.componentClassName,
             ...(resolvedDynamicType ? { [resolvedDynamicType]: handleDynamicEvent } : {}),
         }
 

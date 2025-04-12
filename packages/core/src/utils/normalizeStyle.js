@@ -9,8 +9,6 @@ import buildKeyframesModule from './builds/buildKeyframesModule'
 import buildMediaModule from './builds/buildMediaModule'
 import buildPseudoModule from './builds/buildPseudoModule'
 import { insertBaseStyleOnce } from './insertDOMStyleOnce'
-import normalizeBaseStyle from './normalizeBaseStyle'
-import normalizeDynamicStyle from './normalizeDynamicStyle'
 
 const animationPropertyList = ['duration', 'easing', 'delay', 'iteration', 'direction', 'fillMode', 'playState']
 const animationPropertySet = new Set(animationPropertyList)
@@ -19,15 +17,15 @@ const easingSet = new Set(['easing'])
 function normalizeStyle(props, META) {
     const { dynamic, keyframes, media, pseudo, ...rest } = props
 
-    const { media: DMedia, keyframes: DKeyframes, pseudo: DPseudo, ...DString } = dynamic || {}
+    // const { media: DMedia, keyframes: DKeyframes, pseudo: DPseudo, ...DString } = dynamic || {}
 
-    const dynamicProps = {}
-    if (DString && Object.keys(DString).length) dynamicProps.string = DString
-    if (DMedia) dynamicProps.media = DMedia
-    if (DKeyframes) dynamicProps.keyframes = DKeyframes
-    if (DPseudo) dynamicProps.pseudo = DPseudo
+    // const dynamicProps = {}
+    // if (DString && Object.keys(DString).length) dynamicProps.string = DString
+    // if (DMedia) dynamicProps.media = DMedia
+    // if (DKeyframes) dynamicProps.keyframes = DKeyframes
+    // if (DPseudo) dynamicProps.pseudo = DPseudo
 
-    if (Object.keys(dynamicProps).length > 0) normalizeDynamicStyle(dynamicProps, META)
+    // if (Object.keys(dynamicProps).length > 0) normalizeDynamicStyle(dynamicProps, META)
 
     // const DMedia = dynamic?.media
     // const DKeyframes = dynamic?.keyframes
@@ -42,7 +40,7 @@ function normalizeStyle(props, META) {
     if (pseudo) baseProps.pseudo = pseudo
     if (keyframes) baseProps.keyframes = keyframes
 
-    normalizeBaseStyle(baseProps, META)
+    // normalizeBaseStyle(baseProps, META)
     // normalizeDynamicStyle(dynamic, META)
 
     function safeBuild(source, builderFn) {
@@ -86,7 +84,7 @@ function normalizeStyle(props, META) {
     //     mergedBlocks.push(...pseudoBlocks)
     // }
 
-    insertStyleOnce(META.selectorBase, mergedBlocks)
+    // insertStyleOnce(META.selectorBase, mergedBlocks)
     // if (keyframeArrayBlock?.length > 0) {
     //     for (const block of keyframeArrayBlock) {
     //         if (block.type === 'keyframes') {
@@ -107,7 +105,7 @@ function normalizeStyle(props, META) {
         // console.log('mergedStyle:', mergedStyle)
         mergedBlocks.push(` {\n${flatBlock}\n}`)
 
-        insertStyleOnce(META.selectorDynamic, mergedBlocks)
+        // insertStyleOnce(META.selectorDynamic, mergedBlocks)
     }
 }
 

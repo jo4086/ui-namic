@@ -6,54 +6,65 @@ import './App.css'
 // import { Box, Input, Button } from '@uinamic/react-ui'
 // import { Box } from '@react-ui'
 import { Box, Input, Button } from '@react-ui'
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Main from './pages/Main'
 // import { Box } from '@uinamic/react-ui'
 // import { logStyle } from '@debug'
 
 function App() {
     const [count, setCount] = useState(0)
+    return (
+        <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/main" element={<Main />} />
+        </Routes>
+    )
 
     return (
-        <Box>
-            <Box className="container" dynamicStyle={boxStyle4}>
-                <Box style={{ flexDirection: 'column', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: '0', content: '"hiddasdasd"' }}>
-                    <a href="https://vite.dev" target="_blank">
-                        <img src={viteLogo} className="logo" alt="Vite logo" />
-                    </a>
-                    <a href="https://react.dev" target="_blank">
-                        <img src={reactLogo} className="logo react" alt="React logo" />
-                    </a>
-                </Box>
-                <Box>
-                    <blockquote>
-                        open-quote blockquote
-                        <blockquote>open-quote 중첩 close-quote</blockquote>
-                        close-quote
-                    </blockquote>
-                    <div className="div1">
-                        open-quote div
-                        <div className="div1_1">open-quote 중첩 close-quote</div>
-                        close-quote
-                    </div>
-                </Box>
-                <Box style={{ display: 'grid', justifyContent: 'center', backgroundColor: 'gray', padding: '10px' }}>
-                    <h1>Vite + React</h1>
-                    <div className="card" style={{ position: 'relative' }}>
-                        <Button dynamicStyle={pseudoStyle} dynamicType="onClick" onClick={() => setCount((count) => count + 1)}>
-                            count is {count}
-                        </Button>{' '}
-                        {/* <Button dynamicStyle={{ dynamic: { backgroundColor: 'blue' } }} dynamicType="onClick" onClick={() => setCount((count) => count + 1)}>
+        <Routes>
+            <Box>
+                <Box className="container" dynamicStyle={boxStyle4}>
+                    <Box style={{ flexDirection: 'column', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: '0', content: '"hiddasdasd"' }}>
+                        <a href="https://vite.dev" target="_blank">
+                            <img src={viteLogo} className="logo" alt="Vite logo" />
+                        </a>
+                        <a href="https://react.dev" target="_blank">
+                            <img src={reactLogo} className="logo react" alt="React logo" />
+                        </a>
+                    </Box>
+                    <Box>
+                        <blockquote>
+                            open-quote blockquote
+                            <blockquote>open-quote 중첩 close-quote</blockquote>
+                            close-quote
+                        </blockquote>
+                        <div className="div1">
+                            open-quote div
+                            <div className="div1_1">open-quote 중첩 close-quote</div>
+                            close-quote
+                        </div>
+                    </Box>
+                    <Box style={{ display: 'grid', justifyContent: 'center', backgroundColor: 'gray', padding: '10px' }}>
+                        <h1>Vite + React</h1>
+                        <div className="card" style={{ position: 'relative' }}>
+                            <Button dynamicStyle={pseudoStyle} dynamicType="onClick" onClick={() => setCount((count) => count + 1)}>
+                                count is {count}
+                            </Button>{' '}
+                            {/* <Button dynamicStyle={{ dynamic: { backgroundColor: 'blue' } }} dynamicType="onClick" onClick={() => setCount((count) => count + 1)}>
                             count is {count}
                         </Button> */}
-                        <p>
-                            Edit <code>src/App.jsx</code> and save to test HMR
+                            <p>
+                                Edit <code>src/App.jsx</code> and save to test HMR
+                            </p>
+                        </div>
+                        <p style={{ color: 'red' }} className="read-the-docs">
+                            Click on the Vite and React logos to learn more
                         </p>
-                    </div>
-                    <p style={{ color: 'red' }} className="read-the-docs">
-                        Click on the Vite and React logos to learn more
-                    </p>
+                    </Box>
                 </Box>
             </Box>
-        </Box>
+        </Routes>
     )
 
     return (
