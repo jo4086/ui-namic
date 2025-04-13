@@ -1,0 +1,113 @@
+import { prefix } from '@debug'
+
+// 안정적으로 stringify
+function stableStringify(obj) {
+    if (Array.isArray(obj)) {
+        return `[${obj.map(stableStringify).join(',')}]`
+    } else if (obj && typeof obj === 'object') {
+        const keys = Object.keys(obj).sort()
+        return `{${keys.map((k) => `"${k}":${stableStringify(obj[k])}`).join(',')}}`
+    } else {
+        return JSON.stringify(obj)
+    }
+}
+
+// 경량 문자열 해시 함수 (djb2 해시 알고리즘)
+function hashString(str) {
+    let hash = 5381
+    for (let i = 0; i < str.length; i++) {
+        hash = (hash * 33) ^ str.charCodeAt(i)
+    }
+    return (hash >>> 0).toString(16) // 16진수 문자열로 반환
+}
+
+// 중첩 객체 → 고유 ID 반환
+
+function generateMetadata_v2(obj, type, options = {}) {
+    const tagToClassPrefix = {
+        button: 'Button',
+        div: 'Box',
+        input: 'InputField',
+    }
+
+    const { userClassName = '', triggeredEvents = [], triggeredMap = {} } = options
+    const typeName = tagToClassPrefix[type] || 'Element'
+    const uniqueId = hashString(stableStringify(obj))
+    const baseClassName = `${prefix}_${typeName}_${uniqueId}`
+    const selectorBase = `.${baseClassName}`
+
+    const triggeredClassList = Object.entries(triggeredMap)
+        .filter(([_, active]) => active)
+        .map(([evt]) => `--${evt}`)
+
+    const fullClassName = [baseClassName, ...triggeredClassList].join(' ')
+    const selectorDynamic = `.${fullClassName.replace(/ /g, '.')}`
+
+    const selectorEvent = {}
+    for (const evt of triggeredEvents) {
+        selectorEvent[evt] = `.${baseClassName}--${evt}`
+    }
+
+    return {
+        baseClassName,
+        fullClassName,
+        selectorBase,
+        selectorDynamic,
+        selectorEvent,
+        componentClassName: [userClassName, fullClassName].filter(Boolean).join(' '),
+        triggeredEvents,
+        triggeredMap,
+    }
+}
+export default generateMetadata_v2
+
+// export function generateMetadata(obj, type, options = {}) {
+//     const tagToClassPrefix = {
+//         button: 'Button',
+//         div: 'Box',
+//         input: 'InputField',
+//     }
+
+//     const typeName = tagToClassPrefix[type] || 'Element'
+//     const uniqueId = hashString(stableStringify(obj))
+
+//     const eventName = {}
+
+//     const baseClassName = `${prefix}_${typeName}_${uniqueId}`
+//     const dynamicClassName = `--${prefix}--dynamic`
+//     const fullClassName = `${baseClassName} ${dynamicClassName}`
+//     const selectorBase = `.${baseClassName}`
+//     const selectorDynamic = `.${baseClassName}.${dynamicClassName}`
+
+//     const isTriggered = options.isTriggered ?? false
+//     const userClassName = options.userClassName || ''
+
+//     const componentClassName = [userClassName, isTriggered ? fullClassName : baseClassName].filter(Boolean).join(' ')
+
+//     return { uniqueId, baseClassName, dynamicClassName, fullClassName, selectorBase, selectorDynamic, componentClassName }
+// }
+
+function safeStableStringify(obj, seen = new WeakSet()) {
+    if (obj && typeof obj === 'object') {
+        if (seen.has(obj)) return '"[Circular]"'
+        seen.add(obj)
+
+        if (Array.isArray(obj)) {
+            return `[${obj.map((item) => safeStableStringify(item, seen)).join(',')}]`
+        }
+
+        const keys = Object.keys(obj).sort()
+        return `{${keys.map((k) => `"${k}":${safeStableStringify(obj[k], seen)}`).join(',')}}`
+    } else {
+        return JSON.stringify(obj)
+    }
+}
+
+const idCache = new WeakMap()
+
+function generateIdOnce(obj) {
+    if (idCache.has(obj)) return idCache.get(obj)
+    const id = hashString(safeStableStringify(obj))
+    idCache.set(obj, id)
+    return id
+}

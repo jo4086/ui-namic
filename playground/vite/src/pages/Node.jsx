@@ -2,11 +2,11 @@ import { Box, Button } from '@react-ui'
 import Container from '../components/Container'
 import { useState } from 'react'
 
-const Main = () => {
+const Node = () => {
     const [count, setCount] = useState(0)
 
     return (
-        <Box>
+        <div className="stateNode">
             <Box style={{ flexDirection: 'column', padding: '10px' }}>
                 <Container>
                     {/* <Box dyClick="font-size:2rem;" dyOrder={['onClick']}></Box> */}
@@ -14,16 +14,15 @@ const Main = () => {
                     <Button onClick={() => setCount((count) => count + 1)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ onClick: 'count', onFocus: 'on' }} watchValueMap={{ count }}>
                         count is {count}
                     </Button>
-                    <Button onClick={() => setCount((count) => (count = 0))}>카운트 초기화</Button>
+                    <Button onClick={() => setCount((count) => (count = 0))}>zzzz</Button>
                 </Container>
             </Box>
             <Box>
-                <Box></Box>
+                d<Box>d</Box>
             </Box>
             <div></div>
             안녕
-        </Box>
+        </div>
     )
 }
-export default Main
-
+export default Node

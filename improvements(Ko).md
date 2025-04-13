@@ -194,3 +194,29 @@ const dx = {
 -   CSS 문법에 유사하지만 더 구조적
 -   스타일, 조건, 상태 모두 한 오브젝트 내에서 선언 가능
 -   확장성과 자동 추론이 공존하는 DSL 설계
+
+## 2025-04-13
+
+### 1. 서로 다른 컴포넌트의 이벤트 관계성으로 인한 스타일 초기화 이슈
+
+문제 코드
+
+```jsx
+import { Box, Button } from '@react-ui'
+import { useState } from 'react'
+
+const Main = () => {
+    const [count, setCount] = useState(0)
+
+    return (
+        <Box>
+            <Button onClick={() => setCount((count) => count + 1)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ onClick: 'count', onFocus: 'on' }}>
+                count is {count}
+            </Button>
+            <Button onClick={() => setCount((count) => (count = 0))}>
+                count Reset
+            </Button>
+        </Box>
+    )
+}
+```

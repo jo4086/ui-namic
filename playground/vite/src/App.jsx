@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, Children } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -9,16 +9,31 @@ import { Box, Input, Button } from '@react-ui'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Main from './pages/Main'
+import Tree from './pages/Tree'
+import Node from './pages/Node'
 // import { Box } from '@uinamic/react-ui'
 // import { logStyle } from '@debug'
 
 function App() {
     const [count, setCount] = useState(0)
+    // return (
+    //     <>
+    //         <Box>
+    //             <Box></Box>
+    //         </Box>
+    //     </>
+    // )
+
     return (
-        <Routes>
-            <Route path="/home" element={<Home />} />
-            <Route path="/main" element={<Main />} />
-        </Routes>
+        <>
+            <Box></Box>
+            <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/main" element={<Main />} />
+                <Route path="/tree" element={<Tree />} />
+                <Route path="/node" element={<Node />} />
+            </Routes>
+        </>
     )
 
     return (

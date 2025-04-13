@@ -1,15 +1,20 @@
-// @uinamic-system/generateRenderData.js
+// @uinamic-system/generateRenderData_v2.js
 
 import { santizeStyle, normalizeStyle, santizeStyle_v2 } from '../utils'
 import useDynamicTrigger from '../hooks/useDynamicTrigger'
 import useDynamicTrigger_v2 from '../hooks/useDynamicTrigger_v2'
-import { logStyle } from '@debug'
-import { generateMetadata } from './generateMetadata'
+import useDynamicTrigger_v3 from '../hooks/useDynamicTrigger_v3'
+
 import normalizeBaseStyle from './normalizeBaseStyle'
 import normalizeDom from './normalizeDOM'
-import { styleTriggerDyEventSet } from './constants'
+import { dxEventToDomEventMap, normalizeDyKeyToEventKey, styleTriggerDyEventSet } from './constants'
 import { forEachObject } from './shared'
 import normalizeStyle_v2 from './normalizeStyle_v2'
+
+import { generateMetadata } from './generateMetadata'
+import generateMetadata_v2 from './generateMetadata_v2'
+
+import { logStyle, isRenderableChildren } from '@debug'
 
 // HTML5 void 요소들 (children 허용 X)
 const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'])
@@ -78,16 +83,21 @@ const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img',
  * }
  */
 
-const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1)
-
-const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay = 'block', dynamicType: defaultDynamicType = undefined, baseStyle: defaultBaseStyle = {} } = {}) => {
-    return function GeneratedComponent({ children, type, display, dynamicType, dynamicStyle = {}, style, className, media, keyframes, dyOrder = [], eventState = {}, ...restProps }) {
-        // console.log(dyOrder)
+const generateRenderData_v2 = ({ type: defaultType = 'div', display: defaultDisplay = 'block', dynamicType: defaultDynamicType = undefined, baseStyle: defaultBaseStyle = {} } = {}) => {
+    return function GeneratedComponent({ children, type, display, dynamicType, dynamicStyle = {}, style, className, media, keyframes, dyOrder = [], dyState, watchValueMap, ...restProps }) {
+        isRenderableChildren(children)
 
         const displayPriority = [defaultDisplay, display, dynamicStyle?.display, style?.display]
-
         const resolvedType = type || defaultType
         const resolvedDisplay = [...displayPriority].reverse().find((v) => v !== undefined)
+
+        forEachObject(restProps, (k, v) => {
+            const dxKey = normalizeDyKeyToEventKey(k)
+            if (dxKey) {
+                dynamicStyle[dxKey] = v
+                delete restProps[k]
+            }
+        })
 
         const mergedStyle = {
             ...defaultBaseStyle,
@@ -104,42 +114,48 @@ const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay
             dynamicStyle: mergedStyle,
         })
 
-        // const styleProps = santizeStyle({
-        //     type: resolvedType,
-        //     display: resolvedDisplay,
-        //     dynamicStyle: mergedStyle,
-        // })
+        // console.log('styleProps:', styleProps)
+        // console.log('triggeredEvents:', triggeredEvents)
 
-        // const { isTriggered, handleDynamicEvent } = useDynamicTrigger({ dynamicType, onEvent: restProps[dynamicType] || null })
-
-        const { triggeredMap, countMap, handleDynamicEvents, isTriggered } = useDynamicTrigger_v2({
-            triggeredEvents: ['onClick', 'onFocus'],
-            restProps, // 실제 props 전달
-            eventState: {
-                onClick: 'count',
-                onFocus: 'on',
-            },
+        const { handleDynamicEvents, triggeredMap, countMap } = useDynamicTrigger_v3({
+            triggeredEvents: ['click'],
+            restProps,
+            dyState: { click: 'count' },
+            watchValueMap, // 👈 외부 상태 연결
         })
 
-        const boundHandlers = Object.fromEntries(Object.entries(handleDynamicEvents))
+        console.log('triggeredMap:', triggeredMap ? triggeredMap : 'non')
 
-        const META = generateMetadata(styleProps, type, {
-            isTriggered,
+        const META = generateMetadata_v2(styleProps, resolvedType, {
             userClassName: className,
+            triggeredMap, // ✅ 실제 상태 (onClick: true 등)
             triggeredEvents: triggeredEvents.map((evt) => dxEventToDomEventMap[evt]),
         })
 
-        console.log('styleProps:', styleProps)
+        console.log('META:', META)
+        // console.log('styleProps:', styleProps)
 
         normalizeDom(styleProps, META)
         normalizeStyle(styleProps, META)
         normalizeStyle_v2(styleProps, META)
 
         const Tag = resolvedType
+
+        const eventHandlers = Object.fromEntries(
+            triggeredEvents.map((evt) => [
+                dxEventToDomEventMap[evt], // ex: 'onClick'
+                handleDynamicEvents[dxEventToDomEventMap[evt]],
+            ])
+        )
+        console.log('countMap:', countMap)
+        console.log('triggeredEvents:', triggeredEvents)
+        console.log('handleDynamicEvents:', handleDynamicEvents)
+        console.log('eventHandlers:', eventHandlers)
+
         const baseProps = {
             ...restProps,
+            ...eventHandlers, // ✅ 모든 이벤트 핸들러 바인딩
             className: META.componentClassName,
-            ...(resolvedDynamicType ? { [resolvedDynamicType]: handleDynamicEvent } : {}),
         }
 
         const isAllowChild = !voidElements.has(Tag) && children != null
@@ -150,10 +166,9 @@ const generateRenderData = ({ type: defaultType = 'div', display: defaultDisplay
             isAllowChild,
             children: isAllowChild ? children : null,
         }
-        // console.groupEnd()
 
         return renderData
     }
 }
 
-export default generateRenderData
+export default generateRenderData_v2

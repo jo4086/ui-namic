@@ -237,6 +237,10 @@ const compositionEvnet = ['onCompositionStart', 'onCompositionUpdate', 'onCompos
 export const onEventAllList = [...mouseEvent, ...keyboardEvent, ...focusEvent, ...formEvent, ...touchEvent, ...dragEvent, ...otherEvent, ...mediaEvent, ...animationEvent, ...uiEvent, ...compositionEvnet]
 export const onEventAllSet = new Set(onEventAllList)
 
+export const styleTriggerEventList = ['click', 'mouseEnter', 'mouseLeave', 'focus', 'blur', 'keyDown', 'touchStart', 'pointerDown']
+export const styleTriggerEventSet = new Set(styleTriggerEventList)
+export const styleTriggerEvent = { list: styleTriggerEventList, set: styleTriggerEventSet }
+
 export const styleTriggerOnEventList = ['onClick', 'onMouseEnter', 'onMouseLeave', 'onFocus', 'onBlur', 'onKeyDown', 'onTouchStart', 'onPointerDown']
 export const styleTriggerOnEventSet = new Set(styleTriggerOnEventList)
 export const styleTriggerOnEvent = { list: styleTriggerOnEventList, set: styleTriggerOnEventSet }

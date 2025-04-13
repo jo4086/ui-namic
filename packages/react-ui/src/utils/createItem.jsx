@@ -1,8 +1,9 @@
 import { logGroup, logStyle } from '@debug'
 import { generateRenderData } from '@core'
+import { generateRenderData_v2 } from '@core'
 
 function createItem(config) {
-    const getRenderData = generateRenderData(config)
+    const getRenderData = generateRenderData_v2(config)
 
     logStyle('config', config, 'skyblue')
 

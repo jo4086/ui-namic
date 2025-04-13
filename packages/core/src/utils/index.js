@@ -1,3 +1,5 @@
 export { default as normalizeStyle } from './normalizeStyle'
 export { default as santizeStyle } from './santizeStyle'
+export { default as santizeStyle_v2 } from './santizeStyle_v2'
 export { default as generateRenderData } from './generateRenderData'
+export { default as generateRenderData_v2 } from './generateRenderData_v2'

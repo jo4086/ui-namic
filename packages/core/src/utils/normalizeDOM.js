@@ -49,7 +49,7 @@ function applyStyleModules(styleProps, META, mode = 'base') {
 
         const cssBlock = buildBaseModule(merged)
         if (cssBlock && cssBlock.trim()) {
-            console.log('cssBlock:', cssBlock)
+            // console.log('cssBlock:', cssBlock)
             insertBaseStyleOnce(selector, cssBlock)
         }
     }
@@ -65,7 +65,7 @@ function applyStyleModules(styleProps, META, mode = 'base') {
     // media
     if (styleProps.media) {
         const mediaBlocks = buildMediaModule(styleProps.media, META)
-        console.log('mediaBlocks:', mediaBlocks)
+        // console.log('mediaBlocks:', mediaBlocks)
 
         // for (const block of mediaBlocks) {
         //     insertMediaStyleOnce(block.name, block.css)
