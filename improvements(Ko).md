@@ -213,10 +213,71 @@ const Main = () => {
             <Button onClick={() => setCount((count) => count + 1)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ onClick: 'count', onFocus: 'on' }}>
                 count is {count}
             </Button>
-            <Button onClick={() => setCount((count) => (count = 0))}>
-                count Reset
-            </Button>
+            <Button onClick={() => setCount((count) => (count = 0))}>count Reset</Button>
         </Box>
     )
 }
 ```
+
+내가 만든 컴포넌트들은 `generateRenderData.js`를 통해 생성이 되는데 이때 이벤트를 관리하는 `useDynamicTrigger.js`는 생성한 컴포넌트마다 독립적으로 스테이트를 가지게 된다.
+
+일반적인 toggle-onClick은 해당 태그만으로만으로 상태를 on-off로 변경하여 하나의 태그만으로 스타일을 동적으로 바꿀 수 있지만
+
+위와같은 카운터형의 onClick에서 카운트가 존재할 때 스타일이 변경된다면 보통 다른 onClick을 통해 count를 초기화하는데
+
+이때 두번째로 count를 초기화해도 `useDynamicTrigger.js`에서는 이 초기화를 두번째 컴포넌트를 초기화 시키지 첫번째 컴포넌트의 카운트는 사라져도 onClick 상태를 `false`로 바꾸지 못한다.
+
+이에 1차 개선안으로는 watch기능을 추가하였고 해당 코드는 아래와 같다.
+
+```jsx
+import { Box, Button } from '@react-ui'
+import { useState } from 'react'
+
+const Main = () => {
+    const [count, setCount] = useState(0)
+
+    return (
+        <Box>
+            <Button onClick={() => setCount((count) => count + 1)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ onClick: 'count', onFocus: 'on' }} watchValueMap={{ count }}>
+                count is {count}
+            </Button>
+            <Button onClick={() => setCount((count) => (count = 0))}>count Reset</Button>
+        </Box>
+    )
+}
+```
+
+여기서 초기화할 대상에 `watchValueMap={{ count }}` props를 추가하였고 `useDynamicTrigger.js`의 코드를 수정하여 count상태를 추적 => 다른곳에 의해 카운트가 초기화 됐다는 플래그를 체크하여 카운트를 관리하는 태그의 스타일 플래그 해제는 성공하였다.
+
+그러나 여기서 다른 고민이 생겨버렸다. count라는 동일한 이름만을 감지한다면??
+
+만약 A페이지의 하위로 B C D E 자식 컴포넌트가 존재하고
+B의 자식중 어딘가에서 count, setCount로 관리하는게 있으며, D의 자식중 어딘가에서 똑같이 count, setCount로 관리하는 구조가 있다고 가정하였다.
+
+둘의 관계는 서로 다른 함수이기에 같은 변수명이여도 지역스코프란 특성에의해 서로 문제는 발생하지 않지만, 이걸 `watchValueMap`에서는 둘다 똑같은 count로만 감지하기에 B의 카운트해제로 인해 D의 카운트가 존재하지만 사라질 수 있지 않을까란 고민이 생겼다.
+
+그래서 어떻게해야 서로 연결되는 컴포넌트만을 내가 감지하여서 독립적으로 처리해줄 수 있을까에 대해 다시 고민하게 되었고
+
+이걸 다시 사용자에게 플래그를 따로 써달라고 하기에는 사용자는 너무 불편하고 귀찮은 일이 추가되며 따로 학습해야하는 키를 배워야하는 상황이 연출된다. 그로인해 사실 watchValueMap도 추가하는것도 마음에 들지 않았었다.
+
+그럼 어떻게 해야할까...
+
+그러다가 제너레이터 렌더 데이터를 통해 컴포넌트를 생성할 때 children이라는 props에 눈길이 갔다.
+
+버튼 컴포넌트라던지는 일단 children의 가장 마지막에 존재하며 버튼 컴포넌트 내부는 다른 함수형 컴포넌트는 오지 못할것이다. 굳이 버튼이 아닌 div에 onClick을 준 상황이라 해도 아마 마찬가지일꺼라 판단하였고
+
+children을 분석하여 내부에 함수형이나 태그같이 렌더링되는 자식요소가 없으며 이벤트가 존재시에 마지막 노드라고 단순하게 추론하였고
+
+children을 `console.log`로 내부를 탐색하니 `$$typeof`라는 키가 존재한다면 자식은 무조건 렌더링하는 요소라는걸 알 수 있었다.
+
+그럼 이를 역추적하면 `generateRenderData.js`로 호출한 chdilren을 통해 적어도 내껄 호출하기 시작한것들의 모든 내부의 중첩구조를 가상화 할 수 있지 않을까?? 란 생각을 하게 되었다.
+
+아직 나의 개발실력은 많이 부족하여 생각은 했지만 구현은 쉽지 않을꺼 같다는 생각이 들게되었고
+
+해당 문제에 대한 해결과정에 대해서만 기록하기로 한다. 추후 해당 문제는 이 내용을 기반으로 가상 컴포넌트 트리를 재현하여 서로 같은 이벤트의 스테이트를 공유하는 컴포넌트끼리 추적하는게 개발에서 첫번째로 가장 큰 관문이라 생각한다.
+
+이 가상트리는 잘못한다면 많은 성능이슈를 불러일으킬 것 같기도 하여
+
+루트만 children을 검색한다던지, 그럼 렌더데이터는 호출하지 않은 보이지 않는 루트가 있다면 내 렌더데이터 호출은 병렬적 루트구조 일 수도 있고 다양한 관점에서 많은 고민을 해야할 것 같다.
+
+이상으로 미숙한 개발자의 해결하지 못하는 버그에 대한 고찰을 마친다.
