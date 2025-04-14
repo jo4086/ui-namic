@@ -1,4 +1,4 @@
-// @uinamic-system/generateRenderData_v2.js
+// @uinamic-system/generateRenderData_v3.js
 
 import { santizeStyle, normalizeStyle, santizeStyle_v2 } from '../utils'
 import useDynamicTrigger from '../hooks/useDynamicTrigger'
@@ -84,17 +84,12 @@ const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img',
  * }
  */
 
-const generateRenderData_v2 = ({ type: defaultType = 'div', display: defaultDisplay = 'block', dynamicType: defaultDynamicType = undefined, baseStyle: defaultBaseStyle = {} } = {}) => {
+const generateRenderData_v3 = ({ type: defaultType = 'div', display: defaultDisplay = 'block', dynamicType: defaultDynamicType = undefined, baseStyle: defaultBaseStyle = {} } = {}) => {
     return function GeneratedComponent({ children, type, display, dynamicType, dynamicStyle = {}, style, className, media, keyframes, dyOrder = [], dyState, watchValueMap, ...restProps }) {
         isRenderableChildren(children)
 
-        const displayPriority = [defaultDisplay, display, dynamicStyle?.display, style?.display]
-        const resolvedType = type || defaultType
-        console.log('type:', type)
-        validateHtmlTag(resolvedType)
-
-        const resolvedDisplay = [...displayPriority].reverse().find((v) => v !== undefined)
-
+        // 1. rest 정제
+        // rest.(dyClick, dyFocus) => click, focus... 로 변경후 rest에서 제거
         forEachObject(restProps, (k, v) => {
             const dxKey = normalizeDyKeyToEventKey(k)
             if (dxKey) {
@@ -103,6 +98,15 @@ const generateRenderData_v2 = ({ type: defaultType = 'div', display: defaultDisp
             }
         })
 
+        // 디스플레이 병합
+        const displayPriority = [defaultDisplay, display, dynamicStyle?.display, style?.display]
+        const resolvedDisplay = [...displayPriority].reverse().find((v) => v !== undefined)
+
+        // tag 병합
+        const resolvedType = type || defaultType
+        validateHtmlTag(resolvedType)
+
+        // style 병합
         const mergedStyle = {
             ...defaultBaseStyle,
             ...dynamicStyle,
@@ -112,12 +116,20 @@ const generateRenderData_v2 = ({ type: defaultType = 'div', display: defaultDisp
         }
 
         const resolvedDynamicType = dynamicType || defaultDynamicType
+
+        // santizeStyle을 통해 tag, display, 병합스타일의 검증
+        // 검증내용: display가 tag에 올바르게 적용된 상태인가?
+        // 병합한 스타일 객체는
+        // 1. 올바른 css속성 및 올바른 특수키를 가지고 있는가?
+        // 2. transition의 키경우 평탄화 작업
         const { styleProps, triggeredEvents } = santizeStyle_v2({
             type: resolvedType,
             display: resolvedDisplay,
             dynamicStyle: mergedStyle,
         })
 
+        // console.log('styleProps:', styleProps)
+        // console.log('triggeredEvents:', triggeredEvents)
 
         const { handleDynamicEvents, triggeredMap, countMap } = useDynamicTrigger_v3({
             triggeredEvents: ['click'],
@@ -126,7 +138,7 @@ const generateRenderData_v2 = ({ type: defaultType = 'div', display: defaultDisp
             watchValueMap, // 👈 외부 상태 연결
         })
 
-        // console.log('triggeredMap:', triggeredMap ? triggeredMap : 'non')
+        console.log('triggeredMap:', triggeredMap ? triggeredMap : 'non')
 
         const META = generateMetadata_v2(styleProps, resolvedType, {
             userClassName: className,
@@ -134,7 +146,7 @@ const generateRenderData_v2 = ({ type: defaultType = 'div', display: defaultDisp
             triggeredEvents: triggeredEvents.map((evt) => dxEventToDomEventMap[evt]),
         })
 
-        // console.log('META:', META)
+        console.log('META:', META)
         // console.log('styleProps:', styleProps)
 
         normalizeDom(styleProps, META)
@@ -149,10 +161,10 @@ const generateRenderData_v2 = ({ type: defaultType = 'div', display: defaultDisp
                 handleDynamicEvents[dxEventToDomEventMap[evt]],
             ])
         )
-        // console.log('countMap:', countMap)
-        // console.log('triggeredEvents:', triggeredEvents)
-        // console.log('handleDynamicEvents:', handleDynamicEvents)
-        // console.log('eventHandlers:', eventHandlers)
+        console.log('countMap:', countMap)
+        console.log('triggeredEvents:', triggeredEvents)
+        console.log('handleDynamicEvents:', handleDynamicEvents)
+        console.log('eventHandlers:', eventHandlers)
 
         const baseProps = {
             ...restProps,
@@ -173,4 +185,4 @@ const generateRenderData_v2 = ({ type: defaultType = 'div', display: defaultDisp
     }
 }
 
-export default generateRenderData_v2
+export default generateRenderData_v3

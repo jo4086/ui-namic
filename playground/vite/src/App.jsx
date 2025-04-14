@@ -11,6 +11,7 @@ import Home from './pages/Home'
 import Main from './pages/Main'
 import Tree from './pages/Tree'
 import Node from './pages/Node'
+import Root from './pages/Root'
 // import { Box } from '@uinamic/react-ui'
 // import { logStyle } from '@debug'
 
@@ -26,8 +27,8 @@ function App() {
 
     return (
         <>
-            <Box></Box>
             <Routes>
+                <Route path="/" element={<Root />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/main" element={<Main />} />
                 <Route path="/tree" element={<Tree />} />
