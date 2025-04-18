@@ -3,7 +3,8 @@
 import { createItem } from '@react-ui'
 import { globalStyle } from '../theme'
 
-export const Input = createItem({
+export const InputField = createItem({
+    itemName: 'InputField', // 생성할 함수형 컴포넌트의 원래 이름 메타값으로 넘기는거 추가
     type: 'input',
     display: 'flex',
     baseStyle: {
@@ -18,4 +19,4 @@ export const Input = createItem({
     },
 })
 
-export default Input
+export default InputField

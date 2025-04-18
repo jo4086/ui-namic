@@ -12,11 +12,12 @@ import Main from './pages/Main'
 import Tree from './pages/Tree'
 import Node from './pages/Node'
 import Root from './pages/Root'
+import Intro from './pages/Intro'
 // import { Box } from '@uinamic/react-ui'
 // import { logStyle } from '@debug'
 
 function App() {
-    const [count, setCount] = useState(0)
+    // const [count, setCount] = useState(0)
     // return (
     //     <>
     //         <Box>
@@ -24,11 +25,14 @@ function App() {
     //         </Box>
     //     </>
     // )
+    // console.log('App.js 루트 클릭\n', <Box onClick={() => setCount((count) => count + 2)}></Box>)
 
     return (
         <>
+            {/* <Box onClick={() => setCount((count) => count + 2)}></Box> */}
             <Routes>
-                <Route path="/" element={<Root />} />
+                <Route path="/" element={<Intro />} />
+                <Route path="/root" element={<Root />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/main" element={<Main />} />
                 <Route path="/tree" element={<Tree />} />

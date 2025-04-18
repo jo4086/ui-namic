@@ -12,4 +12,10 @@ export default defineConfig({
             '@core': path.resolve(__dirname, '../../packages/core/src/index.js'),
         },
     },
+    server: {
+        watch: {
+            // overlay: false,
+            // ignored: ['./src/*'],
+        },
+    },
 })

@@ -1,25 +1,33 @@
+let count = 0
+
 export function isRenderableChildren(children) {
     if (typeof children === 'object') {
+        console.groupCollapsed(`🧩 Renderable children #${count}`)
+
         if (Array.isArray(children)) {
-            console.log('Array children:', children)
+            console.log('📦 Array children:', children)
 
             children.forEach((v, i) => {
-                if (isCompo(v)) {
-                    console.log(`[${i}] 배열 태그 컴포넌트`, v)
+                if (isRenderableElement(v)) {
+                    console.log(`  ✅ [${i}] JSX Element or Component`, v)
                 } else {
-                    console.log(`[${i}] 일반 객체 (렌더 불가)`, v)
+                    console.log(`  ⛔ [${i}] Non-renderable`, v)
                 }
             })
         } else {
-            if (isCompo(children)) {
-                console.log('단일 태그 컴포넌트', children)
+            if (isRenderableElement(children)) {
+                console.log('✅ Single JSX Element or Component', children)
             } else {
-                console.log('단일 일반 객체 (렌더 불가)', children)
+                console.log('⛔ Single object is not renderable', children)
             }
         }
+
+        console.groupEnd()
     }
+
+    count++
 }
 
-function isCompo(object) {
-    return !!object?.['$$typeof']
+function isRenderableElement(obj) {
+    return !!obj?.['$$typeof']
 }
