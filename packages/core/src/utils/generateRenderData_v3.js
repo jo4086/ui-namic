@@ -7,8 +7,8 @@ import useDynamicTrigger_v3 from '../hooks/useDynamicTrigger_v3'
 
 import normalizeBaseStyle from './normalizeBaseStyle'
 import normalizeDom from './normalizeDOM'
-import { dxEventToDomEventMap, normalizeDyKeyToEventKey, styleTriggerDyEventSet } from './constants'
-import { forEachObject } from './shared'
+import { dxEventToDomEventMap, dyPropToDomEventMap, normalizeDyKeyToEventKey, styleTriggerDyEventSet } from './constants'
+import { forEachObject, reMapKeys } from './shared'
 import normalizeStyle_v2 from './normalizeStyle_v2'
 
 import { generateMetadata } from './generateMetadata'
@@ -22,32 +22,30 @@ const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img',
 
 const generateRenderData_v3 = ({ itemName, type: defaultType = 'div', display: defaultDisplay = 'block', dynamicType: defaultDynamicType = undefined, baseStyle: defaultBaseStyle = {} } = {}) => {
     return function GeneratedComponent({ children, type, display, dynamicType, dynamicStyle = {}, style, className, media, keyframes, dyOrder = [], dyState, watchValueMap, ...restProps }) {
-        // isRenderableChildren(children) // @debug - children으로 $$typeof 검색
-        // console.log(children)
+        const newds = reMapKeys(dynamicStyle, dyPropToDomEventMap)
 
-        // console.log('restProps.onClick:', restProps.onClick.toString())
-        // console.log('원형 코드:', restProps.onClick.toString())
-
-        console.log('itemName:', itemName)
-
-        if (typeof restProps.onClick === 'function') {
-            const originalCode = restProps.onClick.toString()
-            // console.log('📦 onClick 원형:', originalCode)
-            console.log('📦 onClick 실제:', restProps.onClick)
-        }
+        /**
+         * @type {debug}
+         */
+        // if (typeof restProps.onClick === 'function') {
+        //     const originalCode = restProps.onClick.toString()
+        //     // console.log('📦 onClick 원형:', originalCode)
+        //     console.log('📦 onClick 실제:', restProps.onClick)
+        // }
 
         // 1. rest 정제
-        // rest.(dyClick, dyFocus) => click, focus... 로 변경후 rest에서 제거
+        // rest.(dyClick, dyFocus) => onClick, onFocus... 로 변경후 rest에서 제거
         forEachObject(restProps, (k, v) => {
-            const dxKey = normalizeDyKeyToEventKey(k)
+            const dxKey = dyPropToDomEventMap[k]
             if (dxKey) {
-                dynamicStyle[dxKey] = v
+                newds[dxKey] = v
                 delete restProps[k]
             }
         })
 
         // 디스플레이 병합
-        const displayPriority = [defaultDisplay, display, dynamicStyle?.display, style?.display]
+        // const displayPriority = [defaultDisplay, display, dynamicStyle?.display, style?.display]
+        const displayPriority = [defaultDisplay, display, newds?.display, style?.display]
         const resolvedDisplay = [...displayPriority].reverse().find((v) => v !== undefined)
 
         // tag 병합
@@ -57,7 +55,7 @@ const generateRenderData_v3 = ({ itemName, type: defaultType = 'div', display: d
         // style 병합
         const mergedStyle = {
             ...defaultBaseStyle,
-            ...dynamicStyle,
+            ...newds,
             ...(keyframes && { keyframes }),
             ...(media && { media }),
             ...style,
@@ -79,7 +77,7 @@ const generateRenderData_v3 = ({ itemName, type: defaultType = 'div', display: d
         const { handleDynamicEvents, triggeredMap, countMap } = useDynamicTrigger_v3({
             triggeredEvents: ['click'],
             restProps,
-            dyState: { click: 'count' },
+            dyState,
             watchValueMap, // 👈 외부 상태 연결
         })
 

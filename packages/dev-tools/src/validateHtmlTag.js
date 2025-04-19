@@ -7,7 +7,7 @@ export async function validateHtmlTag(tag) {
     const validHtmlTagSet = await getCachedExport('./constants.js', 'validHtmlTagSet', 'static')
     if (validHtmlTagSet.has(tag)) return
 
-    const suggestSmartTag = await getCachedExport('./suggestSmartTag.js', 'suggestSmartTag', 'logic')
+    const suggestSmartTag = await getCachedExport('./suggestSmartTag_v2.js', 'suggestSmartTag', 'logic')
     const suggestion = suggestSmartTag(tag)
 
     handleError(`Invalid HTML tag: <${tag}>`, { suggestion }, { showOverlay: true })

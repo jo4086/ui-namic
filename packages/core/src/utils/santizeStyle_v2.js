@@ -1,7 +1,7 @@
 // @uinamic-system/utils/santizeStyle.js
 
 import normalizeDisplay from './normalizeDisplay'
-import { displaySetMap, styleTriggerEventList } from './constants'
+import { displaySetMap, styleTriggerEventList, styleTriggerOnEventList } from './constants'
 import { handleError } from './shared/handleError'
 
 function santizeStyle_v2(config) {
@@ -30,7 +30,7 @@ function santizeStyle_v2(config) {
 export default santizeStyle_v2
 
 const optionKeyList = ['keyframes', 'media']
-const specialKeySet = new Set([...optionKeyList, ...styleTriggerEventList])
+const specialKeySet = new Set([...optionKeyList, ...styleTriggerOnEventList])
 
 const transitionSet = new Set(['transition'])
 

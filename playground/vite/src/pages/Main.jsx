@@ -57,16 +57,20 @@ const Main = () => {
     return (
         <Box style={{ padding: '30px' }}>
             <Box>
-                <Button onClick={() => setCount10((count) => count + 1)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ onClick: 'count', onFocus: 'on' }} watchValueMap={{ count10 }}>
-                    count is {count10}
+                <Button onClick={() => setCount((count) => count + 1)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ click: 'count' }} watchValueMap={{ count }}>
+                    count is {count}
                 </Button>
-                <Button onClick={() => setCount10((e) => (e = 0))}>카운트 초기화</Button>
+                <Button onClick={() => setCount((e) => (e = 0))}>
+                    카운트 초기화
+                </Button>
             </Box>
             <Box>
-                <Button onClick={() => setCount2((count) => count + 2)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ onClick: 'count', onFocus: 'on' }} watchValueMap={{ count2 }}>
+                <Button onClick={() => setCount2((count) => count + 2)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ click: 'count' }} watchValueMap={{ count2 }}>
                     count is {count2}
                 </Button>
-                <Button onClick={() => setCount2((e) => (e = 0))}>카운트 초기화</Button>
+                <Button onClick={() => setCount2((e) => (e = 0))}>
+                    카운트 초기화
+                </Button>
             </Box>
             {/* <Box>
                 <Button onClick={() => setCount3((count) => count + 3)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ onClick: 'count', onFocus: 'on' }} watchValueMap={{ count3 }}>
