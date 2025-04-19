@@ -1,3 +1,6 @@
+## 캐싱전략
+
+```js
 // 📁 _cache.js
 const ALLOWED_CACHE_TYPES = ['static', 'logic']
 
@@ -73,3 +76,26 @@ export async function getCachedExport(exportName, type = 'static') {
 // valueCache.set(key1, { test: 123 })
 // console.log('valueCache.has(key1):', valueCache.has(key1)) // ✅ true
 // console.log('valueCache.has(key2):', valueCache.has(key2)) // ✅ key1 === key2면 true여야 함
+```
+
+```js
+CACHE_REGISTRY: ⏷{static: Array(2), logic: Array(2)}
+                  ⏵logic: (2) [Map(0), WeakMap]
+                  ⏷static: Array(2)
+                    ⏷0: Map(1)
+                      ⏷[[Entries]]
+                      ⏷0: {"./static/index.js::specialKeySet" => Object}
+                          key: "./static/index.js::specialKeySet"
+                        ⏵value: {path: './static/index.js', exportName: 'specialKeySet'}
+                      size: 1
+                    ⏵[[Prototype]]: Map
+                  ⏷1: WeakMap
+                    ⏷[[Entries]]
+                      ⏷0: {Object => Module}
+                        ⏵key: {path: './static/index.js', exportName: 'specialKeySet'}
+                        ⏵value: Module {Symbol(Symbol.toStringTag): 'Module'}
+                    ⏵[[Prototype]]: WeakMap
+                    length: 2
+                  ⏵[[Prototype]]: Array(0)
+                ⏵[[Prototype]]: Object
+```

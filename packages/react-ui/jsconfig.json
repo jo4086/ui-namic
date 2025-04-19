@@ -5,6 +5,7 @@
             "@react-ui": ["src/index.js"],
             "@debug": ["../debug/src/index.js"],
             "@core": ["../core/src/index.js"]
+            // "@dev-tools":["../dev-tools/src/index.js"]
         },
         "jsx": "react-jsx"
     },

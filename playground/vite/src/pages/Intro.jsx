@@ -8,6 +8,9 @@ const styl = {
         backgroundColor: 'black',
         color: 'white',
     },
+    dyFocus: {
+        color: 'black',
+    },
 }
 
 const Intro = () => {
@@ -20,12 +23,12 @@ const Intro = () => {
         <>
             <Box dynamicStyle={styl} type="article" style={{ gap: '10px', backgroundColor: 'tan' }} dyClick={{ backgroundColor: 'blue' }}>
                 {/* <article style={{ padding: '20px', border: '1px solid red', display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: '20px 30px', borderRadius: '4px' }}>
-                    <Box>아티클1</Box>
                     <Box>아티클2</Box>
                     <Box>아티클3</Box>
                     <Box>아티클4</Box>
                 </article>
                 <article>아티클</article> */}
+                <Box>새로추가</Box>
                 <Box>하이</Box>
                 <Box>
                     <Box>하이</Box>

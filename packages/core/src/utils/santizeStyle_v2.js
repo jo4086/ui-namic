@@ -3,6 +3,7 @@
 import normalizeDisplay from './normalizeDisplay'
 import { displaySetMap, styleTriggerEventList, styleTriggerOnEventList } from './constants'
 import { handleError } from './shared/handleError'
+import { validateStyleDSLKeys } from './validateProxy'
 
 function santizeStyle_v2(config) {
     const { display, type, dynamicStyle } = config
@@ -14,7 +15,8 @@ function santizeStyle_v2(config) {
     const { primitiveProps, referenceProps } = splitPropsByType(formatStyleData)
 
     validateCssStringPropsForDisplay(primitiveProps, displayGroup)
-    validateDynamicStyleKeys(referenceProps)
+    validateStyleDSLKeys(referenceProps)
+    // validateDynamicStyleKeys(referenceProps)
 
     const styleProps = {
         ...primitiveProps,
@@ -93,11 +95,22 @@ const splitPropsByType = (formatStyleData) => {
 const validateDynamicStyleKeys = (referenceProps) => {
     const errorItems = {}
 
+    console.log('referenceProps:', referenceProps)
+
     for (const key in referenceProps) {
+        console.log('key1:', key)
         if (!specialKeySet.has(key)) {
             errorItems[key] = referenceProps[key]
         }
     }
+
+    // for (const key of Object.keys(referenceProps)) {
+    //     console.log('key2:', key)
+
+    //     if (!specialKeySet.has(key)) {
+    //         errorItems[key] = referenceProps[key]
+    //     }
+    // }
 
     if (Object.keys(errorItems).length > 0) {
         handleError('Invalid style object key(s) found in dynamicStyle', errorItems)

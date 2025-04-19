@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es2020",
+        "lib": ["es2020", "dom"],
+        "baseUrl": ".",
+        "paths": {
+            "@dev-tools": ["src/index.js"]
+        },
+        "jsx": "react-jsx"
+    },
+    "include": ["src"]
+}
