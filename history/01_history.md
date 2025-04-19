@@ -13,7 +13,7 @@
 
 -   초기에 스타일드 컴포넌트를 이용하여 정의한 코드
      <details>
-     <summary> customStyled.js </summary>
+     <summary> $\text{\color{gray}{customStyled.js}}$ </summary>
 
     ```js
     import styled from 'styled-components'
@@ -190,11 +190,9 @@
 
      </details>
 
-<!-- $\textit{\color{gray}{\small{\textsf{Box.jsx}}}}$ -->
-
 -   초기 컴포넌트
      <details>
-     <summary> $\textit{\color{gray}{\small{\textsf{Box.jsx}}}}$ </summary>
+     <summary> $\text{\color{gray}{Box.jsx}}$ </summary>
 
     ```jsx
     import * as a from '../customStyled'
