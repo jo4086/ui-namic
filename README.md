@@ -21,6 +21,7 @@ npm install -g pnpm
 
 ```bash
 git clone https://github.com/jo4086/ui-namic.git
+cd ui-namic
 git checkout rebuild
 
 chmod +x setup-env.sh
