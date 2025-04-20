@@ -19,10 +19,10 @@ function registerCacheType(type) {
 
     if (!CACHE_REGISTRY[type]) {
         CACHE_REGISTRY[type] = [new Map(), new WeakMap()]
-        console.log(`🛠️  캐시 타입 생성됨: '${type}'`)
+        // console.log(`🛠️  캐시 타입 생성됨: '${type}'`)
     }
 
-    console.log('CACHE_REGISTRY:', CACHE_REGISTRY)
+    // console.log('CACHE_REGISTRY:', CACHE_REGISTRY)
     return CACHE_REGISTRY[type]
 }
 
@@ -52,16 +52,16 @@ export async function getCachedExport(exportName, type = 'static') {
     let mod
 
     if (!valueCache.has(key)) {
-        console.log(`🧩 [cache] 모듈 로드됨: ${importPath}`)
+        // console.log(`🧩 [cache] 모듈 로드됨: ${importPath}`)
         mod = await import(importPath)
         valueCache.set(key, mod)
     } else {
-        console.log(`💾 [cache] 캐시에서 사용됨: ${importPath}`)
+        // console.log(`💾 [cache] 캐시에서 사용됨: ${importPath}`)
         mod = valueCache.get(key)
     }
 
     const exportValue = mod?.[exportName]
-    console.log(`📦 [cache] 반환 export: ${exportName}`, exportValue)
+    // console.log(`📦 [cache] 반환 export: ${exportName}`, exportValue)
     return exportValue
 }
 

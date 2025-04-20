@@ -1,6 +1,8 @@
 import { getCachedExport } from './_cache.js'
 import { handleError } from './handleError.js'
+import { removeOverlayError } from './removeOverlayError.js'
 
+console.time('dev-tools')
 export async function validateHtmlTag(tag) {
     if (!tag) return
 
@@ -14,10 +16,14 @@ export async function validateHtmlTag(tag) {
 }
 
 export async function validateStyleDSLKeys(referenceProps) {
-    if (!referenceProps) return
+    const code = 'STYLE_INVALID_DSL_KEY'
+
+    if (!referenceProps) {
+        removeOverlayError(code)
+        return
+    }
 
     const errorItems = {}
-
     const specialKeySet = await getCachedExport('specialKeySet', 'static')
 
     for (const key in referenceProps) {
@@ -26,18 +32,48 @@ export async function validateStyleDSLKeys(referenceProps) {
         }
     }
 
-    const errorAry = Object.keys(errorItems)
+    const errorKeys = Object.keys(errorItems)
+    if (errorKeys.length === 0) {
+        removeOverlayError(code)
+        return
+    }
 
-    if (errorAry.length === 0) return
-
-    handleError('Invalid style object key(s) found in dynamicStyle', errorItems, { showOverlay: true })
+    handleError('Invalid style object key(s) found in dynamicStyle', errorItems, {
+        showOverlay: true,
+        code,
+    })
 }
+
+// export async function validateStyleDSLKeys(referenceProps) {
+//     if (!referenceProps) return
+
+//     const errorItems = {}
+
+//     const specialKeySet = await getCachedExport('specialKeySet', 'static')
+
+//     for (const key in referenceProps) {
+//         if (!specialKeySet.has(key)) {
+//             errorItems[key] = referenceProps[key]
+//         }
+//     }
+
+//     const errorAry = Object.keys(errorItems)
+
+//     if (errorAry.length === 0) return
+
+//     handleError('Invalid style object key(s) found in dynamicStyle', errorItems, { showOverlay: true })
+// }
+
+let displaySetMap
 
 export async function validateCssStringPropsForDisplay(primitiveProps, display) {
     if (!primitiveProps) return
 
-    const displaySetMap = await getCachedExport('displaySetMap', 'static')
+    displaySetMap = await getCachedExport('displaySetMap', 'static')
     const displayPropSet = displaySetMap[display]
+
+    // console.log('primitiveProps:', primitiveProps)
+    // console.log('display:', display)
 
     const invalidProperties = Object.keys(primitiveProps).filter((key) => !displayPropSet.has(key))
 
@@ -52,3 +88,4 @@ export async function validateCssStringPropsForDisplay(primitiveProps, display) 
 
     handleError(message, data, { showOverlay: true })
 }
+console.timeEnd('dev-tools')

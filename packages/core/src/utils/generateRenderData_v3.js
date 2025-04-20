@@ -15,7 +15,8 @@ import { generateMetadata } from './generateMetadata'
 import generateMetadata_v2 from './generateMetadata_v2'
 
 import { logStyle, isRenderableChildren, isChildPropsEvent } from '@debug'
-import validateHtmlTag from './validators/validateHtmlTag'
+import { validateHtmlTag } from './validateProxy'
+// import validateHtmlTag from './validators/validateHtmlTag'
 
 // HTML5 void 요소들 (children 허용 X)
 const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'])

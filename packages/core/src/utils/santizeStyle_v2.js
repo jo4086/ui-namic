@@ -3,7 +3,7 @@
 import normalizeDisplay from './normalizeDisplay'
 import { displaySetMap, styleTriggerEventList, styleTriggerOnEventList } from './constants'
 import { handleError } from './shared/handleError'
-import { validateStyleDSLKeys } from './validateProxy'
+import { validateStyleDSLKeys, validateCssStringPropsForDisplay } from './validateProxy'
 
 function santizeStyle_v2(config) {
     const { display, type, dynamicStyle } = config
@@ -14,6 +14,7 @@ function santizeStyle_v2(config) {
 
     const { primitiveProps, referenceProps } = splitPropsByType(formatStyleData)
 
+    console.log('displayGroup"', displayGroup)
     validateCssStringPropsForDisplay(primitiveProps, displayGroup)
     validateStyleDSLKeys(referenceProps)
     // validateDynamicStyleKeys(referenceProps)
@@ -117,17 +118,17 @@ const validateDynamicStyleKeys = (referenceProps) => {
     }
 }
 
-const validateCssStringPropsForDisplay = (primitiveProps, display) => {
-    const displayPropSet = displaySetMap[display]
-    const invalidProperties = []
+// const validateCssStringPropsForDisplay = (primitiveProps, display) => {
+//     const displayPropSet = displaySetMap[display]
+//     const invalidProperties = []
 
-    for (const key of Object.keys(primitiveProps)) {
-        if (!displayPropSet.has(key)) {
-            invalidProperties.push(key)
-        }
-    }
+//     for (const key of Object.keys(primitiveProps)) {
+//         if (!displayPropSet.has(key)) {
+//             invalidProperties.push(key)
+//         }
+//     }
 
-    if (invalidProperties.length > 0) {
-        handleError(`The following properties are invalid for display: '${display}'`, `Details:\n${invalidProperties.map((p) => ` → ${p}`).join('\n')}`)
-    }
-}
+//     if (invalidProperties.length > 0) {
+//         handleError(`The following properties are invalid for display: '${display}'`, `Details:\n${invalidProperties.map((p) => ` → ${p}`).join('\n')}`)
+//     }
+// }

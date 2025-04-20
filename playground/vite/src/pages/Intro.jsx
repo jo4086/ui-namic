@@ -21,14 +21,17 @@ const Intro = () => {
 
     return (
         <>
-            <Box dynamicStyle={styl} type="article" style={{ gap: '10px', backgroundColor: 'tan' }} dyClick={{ backgroundColor: 'blue' }}>
+            <Box display="flex" dynamicStyle={styl} type="article" style={{ flexDirection: 'column', gap: '10px', backgroundColor: 'tan' }} dyClick={{ backgroundColor: 'blue' }}>
                 {/* <article style={{ padding: '20px', border: '1px solid red', display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: '20px 30px', borderRadius: '4px' }}>
                     <Box>아티클2</Box>
                     <Box>아티클3</Box>
                     <Box>아티클4</Box>
                 </article>
                 <article>아티클</article> */}
+                <Box type="article">새로추가</Box>
                 <Box>새로추가</Box>
+                <Box>하이</Box>
+                <Box>하이</Box>
                 <Box>하이</Box>
                 <Box>
                     <Box>하이</Box>
@@ -38,11 +41,6 @@ const Intro = () => {
 
             <InputField ref={inputRef} />
             <Button onClick={() => inputRef.current.focus()}>포커스</Button>
-            {/* <Box>헬로박스</Box>
-            <Button />
-            <Box>
-                <Button />
-            </Box> */}
         </>
     )
 }

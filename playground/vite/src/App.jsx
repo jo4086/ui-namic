@@ -179,8 +179,8 @@ const boxStyle4 = {
             timingFunction: 'ease-in-out',
             percent: {
                 0: { transform: 'translateX(0%)', opacity: 0, easing: 'ease-in' },
-                // 15: { transform: 'translateX(50%)', opacity: 0.3, easing: 'ease-in-out' },
-                // 70: { transform: 'translateX(75%)', opacity: 0.7, easing: 'linear' },
+                15: { transform: 'translateX(50%)', opacity: 0.3, easing: 'ease-in-out' },
+                70: { transform: 'translateX(75%)', opacity: 0.7, easing: 'linear' },
                 100: { transform: 'translateX(50%)', opacity: 1, cursor: 'default', easing: 'ease-out' },
             },
         },
@@ -210,27 +210,25 @@ const boxStyle4 = {
         advanced: [{ query: 'screen, (min-width: 768px) and (max-width: 1023px)', width: '300px' }],
     },
 
-    dynamic: {
+    dyClick: {
         color: 'blue',
         backgroundColor: 'pink',
         padding: '0 200px',
 
-        pseudo: {
-            hover: {
-                backgroundColor: 'red',
-                color: 'white',
-            },
-            after: {
-                position: 'absolute',
-                content: '"hello"',
-                left: '30px',
-                top: '3px',
-                fontSize: '16px',
-                transition: [`left ${commonStyle.one}`, `top ${commonStyle.one}`, `fontSize ${commonStyle.one}`],
-            },
-            before: {
-                opacity: '0',
-            },
+        hover: {
+            backgroundColor: 'red',
+            color: 'white',
+        },
+        after: {
+            position: 'absolute',
+            content: '"hello"',
+            left: '30px',
+            top: '3px',
+            fontSize: '16px',
+            transition: [`left ${commonStyle.one}`, `top ${commonStyle.one}`, `fontSize ${commonStyle.one}`],
+        },
+        before: {
+            opacity: '0',
         },
     },
 }

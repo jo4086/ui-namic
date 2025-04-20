@@ -17,12 +17,24 @@ async function loadDevTools() {
         console.warn('[dev-tools] 미설치...')
     }
 
-    return validatorCache // ✅ 반드시 반환해줘야 .then(...)에서 접근 가능
+    return validatorCache // 반드시 반환해줘야 .then(...)에서 접근 가능
 }
-loadDevTools() // ✅ 최초 1회 비동기 시작
+loadDevTools() // 최초 1회 비동기 시작
 
 export function validateStyleDSLKeys(props) {
     loadDevTools().then((validators) => {
-        validators?.validateStyleDSLKeys?.(props) // ✅ 이제 정상 작동
+        validators?.validateStyleDSLKeys?.(props)
+    })
+}
+
+export function validateCssStringPropsForDisplay(props, display) {
+    loadDevTools().then((validators) => {
+        validators?.validateCssStringPropsForDisplay?.(props, display)
+    })
+}
+
+export function validateHtmlTag(props) {
+    loadDevTools().then((validators) => {
+        validators?.validateHtmlTag?.(props)
     })
 }
