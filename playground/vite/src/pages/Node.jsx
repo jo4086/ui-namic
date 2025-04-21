@@ -3,7 +3,7 @@ import Container from '../components/Container'
 import { useState } from 'react'
 
 const Node = () => {
-    // const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0)
 
     return (
         <div className="stateNode">
@@ -11,10 +11,10 @@ const Node = () => {
                 <Container>
                     {/* <Box dyClick="font-size:2rem;" dyOrder={['onClick']}></Box> */}
                     {/* <Box dynamicStyle={{ fontSize: '2rem', click: { fontSize: '1rem' } }}></Box> */}
-                    {/* <Button onClick={() => setCount((count) => count + 1)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ onClick: 'count', onFocus: 'on' }} watchValueMap={{ count }}>
+                    <Button onClick={() => setCount((count) => count + 1)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ onClick: 'count', onFocus: 'on' }} watchValueMap={{ count }}>
                         count is {count}
                     </Button>
-                    <Button onClick={() => setCount((count) => (count = 0))}>zzzz</Button> */}
+                    <Button onClick={() => setCount((count) => (count = 0))}>zzzz</Button>
                 </Container>
             </Box>
             <Box>

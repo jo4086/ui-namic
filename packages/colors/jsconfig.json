@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        // "moduleResolution": "node",
+        "allowJs": true,
+        // "checkJs": true,
+        "baseUrl": ".",
+        "paths": {
+            "@colors": ["src/index.js"]
+        },
+        "jsx": "react-jsx"
+    },
+    "include": ["src"]
+}

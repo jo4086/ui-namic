@@ -1,0 +1,36 @@
+{
+    "name": "@uinamic/colors",
+    "version": "0.1.2",
+    "description": "HSL 기반 명도 중심 CSS 색상 토큰 생성기",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsup --watch",
+        "clean": "rm -rf dist"
+    },
+    "keywords": [
+        "colors",
+        "css-variables",
+        "hsl",
+        "design-system",
+        "theme",
+        "uinamic"
+    ],
+    "author": "jo4086",
+    "license": "MIT",
+    "packageManager": "pnpm@10.7.0",
+    "devDependencies": {
+        "tsup": "^8.4.0"
+    }
+}
