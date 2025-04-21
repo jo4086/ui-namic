@@ -1,31 +1,41 @@
 export function writeCss(map, spectrumFn, options = {}) {
     const { format = 'css', prefix = '--color-' } = options
 
-    const result = {}
+    // base colors
+    const baseColors = [`  ${prefix}black: hsl(0, 0%, 0%);`, `  ${prefix}white: hsl(0, 0%, 100%);`]
+    const baseColorsBlock = baseColors.join('\n')
+
+    const groupBlocks = []
+    const groupFlatJson = {}
 
     for (const [name, [h, s, l]] of Object.entries(map)) {
         const ramp = spectrumFn(l)
 
-        ramp.forEach((lightness, i) => {
-            const level = (i + 1) * 100
-            const key = `${name}-${level}`
-            const value = `hsl(${h}, ${s}%, ${lightness}%)`
-            result[key] = value
-        })
+        const group = ramp
+            .map((lightness, i) => {
+                const level = (i + 1) * 100
+                const key = `${name}-${level}`
+                const value = `hsl(${h}, ${s}%, ${lightness}%)`
+
+                if (format === 'json') {
+                    groupFlatJson[key] = value
+                    return null
+                }
+
+                return `  ${prefix}${key}: ${value};`
+            })
+            .filter(Boolean)
+
+        groupBlocks.push(group.join('\n'))
     }
 
     if (format === 'json') {
-        return JSON.stringify(result, null, 2)
+        return JSON.stringify(groupFlatJson, null, 2)
     }
 
     if (format === 'scss') {
-        return Object.entries(result)
-            .map(([k, v]) => `${prefix}${k.replace(/^--/, '')}: ${v};`)
-            .join('\n')
+        return [baseColorsBlock, '', ...groupBlocks].join('\n\n')
     }
 
-    // default: css
-    return `:root {\n${Object.entries(result)
-        .map(([k, v]) => `  ${prefix}${k}: ${v};`)
-        .join('\n')}\n}`
+    return `:root {\n${baseColorsBlock}\n\n${groupBlocks.join('\n\n')}\n}`
 }

@@ -73,7 +73,7 @@ fs.writeFileSync('color.css', css, 'utf-8')
 generateColorTokens() 함수는 format: 'scss' 옵션을 사용하면 Sass에서 사용 가능한 $변수 형태의 색상 스펙트럼 토큰을 자동 생성합니다.
 
 ```js
-// color.js
+// color-css.js
 import { generateColorTokens } from '@uinamic/colors'
 
 const scss = generateColorTokens(
@@ -89,8 +89,12 @@ const scss = generateColorTokens(
   }
 )
 
-// 터미널에서
-node color.js
+```
+## 🧪 실행 방법
+
+```bash
+# bash
+node color-css.js
 ```
 
 #### 출력 결과 예시
@@ -107,13 +111,6 @@ $theme-mint-600: hsl(160, 100%, 58%);
 $theme-mint-700: hsl(160, 100%, 66%);
 $theme-mint-800: hsl(160, 100%, 74%);
 $theme-mint-900: hsl(160, 100%, 82%);
-```
-
-## 🧪 실행 방법
-
-```bash
-# bash
-node generate-color-css.js
 ```
 
 ## 🎨 기본 제공 색상맵
