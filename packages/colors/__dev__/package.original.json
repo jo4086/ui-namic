@@ -1,13 +1,13 @@
 {
     "name": "@uinamic/colors",
-    "version": "0.1.13",
+    "version": "0.1.20",
     "description": "HSL 기반 명도 중심 CSS 색상 토큰 생성기",
     "type": "module",
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",
     "exports": {
         ".": {
-            "import": "./dist/index.mjs",
+            "import": "./dist/index.js",
             "require": "./dist/index.js"
         }
     },
