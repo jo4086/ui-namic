@@ -11,7 +11,7 @@ export function writeCss(map, spectrumFn) {
         lines.push(`  /*------------------*/`)
         ramp.forEach((lightness, i) => {
             const level = (i + 1) * 100
-            lines.push(`  --color-${name}${level}: hsl(${h}, ${s}%, ${lightness}%);`)
+            lines.push(`  --color-${name}-${level}: hsl(${h}, ${s}%, ${lightness}%);`)
         })
     }
 

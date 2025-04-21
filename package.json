@@ -7,7 +7,8 @@
         "build": "pnpm -r build",
         "dev": "turbo run dev --parallel",
         "clean": "rimraf \"**/dist\"",
-        "lint": "turbo run lint"
+        "lint": "turbo run lint",
+        "publish:colors": "pnpm --filter @uinamic/colors exec npm version patch && pnpm --filter @uinamic/colors build && node scripts/cleanPackageJson.mjs && cd packages/colors && npm publish --access public && cd ../../ && node scripts/restorePackageJson.mjs"
     },
     "keywords": [
         "react",
