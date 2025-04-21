@@ -11,7 +11,7 @@ const outputDir = outputIndex !== -1 ? args[outputIndex + 1] : './theme' // 기�
 
 // --name은 파일명으로 사용
 const nameIndex = args.indexOf('--name')
-const fileName = nameIndex !== -1 ? args[nameIndex + 1] : 'uinamic-color' // 기본 파일명 'uinamic-color'
+const name = nameIndex !== -1 ? args[nameIndex + 1] : 'uinamic-color' // 기본 파일명 'uinamic-color'
 
 // --format 인자 처리
 const formatIndex = args.indexOf('--format')
@@ -43,7 +43,7 @@ const css = generateColorTokens(
         mint: [160, 100, 50],
         coral: [16, 100, 60],
     },
-    { format, prefix, fileName, path: outputDir } // 동적으로 받아온 값 전달
+    { format, prefix, name, path: outputDir } // 동적으로 받아온 값 전달
 )
 
 // 파일 저장
