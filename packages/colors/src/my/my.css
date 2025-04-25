@@ -1,0 +1,14 @@
+:root {
+  --theme-black: hsl(0, 0%, 0%);
+  --theme-white: hsl(0, 0%, 100%);
+
+  --theme-green-100: hsl(120, 100%, 8%);
+  --theme-green-200: hsl(120, 100%, 16%);
+  --theme-green-300: hsl(120, 100%, 24%);
+  --theme-green-400: hsl(120, 100%, 32%);
+  --theme-green-500: hsl(120, 100%, 40%);
+  --theme-green-600: hsl(120, 100%, 48%);
+  --theme-green-700: hsl(120, 100%, 56%);
+  --theme-green-800: hsl(120, 100%, 64%);
+  --theme-green-900: hsl(120, 100%, 72%);
+}

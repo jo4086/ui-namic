@@ -40,10 +40,22 @@ export interface GenerateColorTokenOptions {
      * If not provided, the default name 'uinamic-color' will be used.
      */
     name?: string
+
+    /**
+     * 명도 스펙트럼 생성 시 사용할 최소 밝기 제한값입니다.
+     * 기본값은 10이며, 0~50 사이의 값을 추천합니다.
+     *
+     * The minimum lightness range limit for spectrum generation.
+     * Default is 10. Values between 0 and 50 are recommended.
+     */
+    limit?: number
 }
 
 export function generateColorTokens(map: ColorHSLMap, options?: GenerateColorTokenOptions): string
 
-export function getFullSpectrumFromCenter(lightness: number): number[]
+export function getFullSpectrumFromCenter(
+    centerL: number,
+    limit?: number
+): number[]
 
-export function writeCss(map: ColorHSLMap, spectrumFn: (lightness: number) => number[], options: GenerateColorTokenOptions): string
+export function writeCss(map: ColorHSLMap, spectrumFn: (lightness: number, limit?: number) => number[], options: GenerateColorTokenOptions): string

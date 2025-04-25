@@ -1,5 +1,5 @@
 export function writeCss(map, spectrumFn, options = {}) {
-    const { format = 'css', prefix = '--color-' } = options
+    const { format = 'css', prefix = '--color-', limit = 5 } = options
 
     // base colors
     const baseColors = [`  ${prefix}black: hsl(0, 0%, 0%);`, `  ${prefix}white: hsl(0, 0%, 100%);`]
@@ -9,7 +9,7 @@ export function writeCss(map, spectrumFn, options = {}) {
     const groupFlatJson = {}
 
     for (const [name, [h, s, l]] of Object.entries(map)) {
-        const ramp = spectrumFn(l)
+        const ramp = spectrumFn(l, limit)
 
         const group = ramp
             .map((lightness, i) => {

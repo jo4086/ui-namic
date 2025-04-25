@@ -1,0 +1,34 @@
+:root {
+  --theme-black: hsl(0, 0%, 0%);
+  --theme-white: hsl(0, 0%, 100%);
+
+  --theme-mint-100: hsl(160, 100%, 5%);
+  --theme-mint-200: hsl(160, 100%, 16%);
+  --theme-mint-300: hsl(160, 100%, 27%);
+  --theme-mint-400: hsl(160, 100%, 38%);
+  --theme-mint-500: hsl(160, 100%, 50%);
+  --theme-mint-600: hsl(160, 100%, 62%);
+  --theme-mint-700: hsl(160, 100%, 73%);
+  --theme-mint-800: hsl(160, 100%, 84%);
+  --theme-mint-900: hsl(160, 100%, 95%);
+
+  --theme-coral-100: hsl(16, 100%, 5%);
+  --theme-coral-200: hsl(16, 100%, 18%);
+  --theme-coral-300: hsl(16, 100%, 32%);
+  --theme-coral-400: hsl(16, 100%, 46%);
+  --theme-coral-500: hsl(16, 100%, 60%);
+  --theme-coral-600: hsl(16, 100%, 69%);
+  --theme-coral-700: hsl(16, 100%, 78%);
+  --theme-coral-800: hsl(16, 100%, 87%);
+  --theme-coral-900: hsl(16, 100%, 95%);
+
+  --theme-green-100: hsl(120, 100%, 5%);
+  --theme-green-200: hsl(120, 100%, 13%);
+  --theme-green-300: hsl(120, 100%, 22%);
+  --theme-green-400: hsl(120, 100%, 31%);
+  --theme-green-500: hsl(120, 100%, 40%);
+  --theme-green-600: hsl(120, 100%, 54%);
+  --theme-green-700: hsl(120, 100%, 68%);
+  --theme-green-800: hsl(120, 100%, 82%);
+  --theme-green-900: hsl(120, 100%, 95%);
+}

@@ -1,0 +1,78 @@
+:root {
+    --theme-black: hsl(0, 0%, 0%);
+    --theme-white: hsl(0, 0%, 100%);
+
+    --theme-mint-100: hsl(160, 100%, 6%);
+    --theme-mint-200: hsl(160, 100%, 17%);
+    --theme-mint-300: hsl(160, 100%, 28%);
+    --theme-mint-400: hsl(160, 100%, 39%);
+    --theme-mint-500: hsl(160, 100%, 50%);
+    --theme-mint-600: hsl(160, 100%, 61%);
+    --theme-mint-700: hsl(160, 100%, 72%);
+    --theme-mint-800: hsl(160, 100%, 83%);
+    --theme-mint-900: hsl(160, 100%, 94%);
+
+    --theme-coral-100: hsl(16, 100%, 28%);
+    --theme-coral-200: hsl(16, 100%, 36%);
+    --theme-coral-300: hsl(16, 100%, 44%);
+    --theme-coral-400: hsl(16, 100%, 52%);
+    --theme-coral-500: hsl(16, 100%, 60%);
+    --theme-coral-600: hsl(16, 100%, 68%);
+    --theme-coral-700: hsl(16, 100%, 76%);
+    --theme-coral-800: hsl(16, 100%, 84%);
+    --theme-coral-900: hsl(16, 100%, 92%);
+
+    --theme-green-100: hsl(120, 100%, 8%);
+    --theme-green-200: hsl(120, 100%, 16%);
+    --theme-green-300: hsl(120, 100%, 24%);
+    --theme-green-400: hsl(120, 100%, 32%);
+    --theme-green-500: hsl(120, 100%, 40%);
+    --theme-green-600: hsl(120, 100%, 48%);
+    --theme-green-700: hsl(120, 100%, 56%);
+    --theme-green-800: hsl(120, 100%, 64%);
+    --theme-green-900: hsl(120, 100%, 72%);
+}
+
+/* 
+const minL = 5
+const maxL = 95
+const isLowRange =  l <= 50
+
+const lowRange = isLowRange ?  l - minL : maxL - l
+const highRange  = isLowRange ? maxL - l : l - minL
+
+// calculate low spectrum
+let lowBias = Math.floor(lowRange * 0.1)
+// 35 => 3.5 => 3
+// 43 => 4.3 => 4
+const filteredLowRange = lowRange - lowBias
+// 35 - 3  = 32
+// 43 - 4 = 39
+lowBias += (lowRange - lowBias) % 4
+
+const lowDelta = lowRange - lowBias
+
+lowBias += filteredRange % 4
+lowBias += (lowRange - lowBias) % 4
+// 32 % 4 = 0
+// 39 % 4 = 3
+// lowBias에 합류
+
+lowDelta = filteredRange - (filteredRange % 4)
+
+
+const lowBias = Math.floor(lowRange * 0.1) + (lowRange % 4)
+const lowDelta = lowRange - lowBias
+const lowSteps = smartLowBias(lowBias).map(w => lowDelta  / 4 + w)
+
+// calculate high spectrum
+const highBias = Math.floor(highRange * 0.1) + (highRange % 4)
+const highDelta = highRange - highBias
+const highSteps = smartHighBias(highBias).map(w => highDelta / 4 + w)
+
+
+
+function accumulate(start, steps) {
+  return steps.reduce((acc, curr) => [...acc, +(acc.at(-1)! + curr).toFixed(1)], [start])
+}
+*/
