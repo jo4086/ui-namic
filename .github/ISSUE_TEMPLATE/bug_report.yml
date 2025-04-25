@@ -1,0 +1,44 @@
+name: 🐞 Bug Report
+description: 발견한 문제를 자세히 작성해주세요
+title: "[Bug] [packages/colors] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### 🐞 버그 제보 템플릿 / Bug Report Template  
+        재현 가능한 예시를 포함하면 빠르게 확인하고 대응할 수 있습니다.
+  
+  - type: input
+    id: summary
+    attributes:
+      label: 버그 요약 / Summary
+      placeholder: 예: 토큰 생성 결과가 명도 100%를 초과함
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 재현 방법 / Reproduction Steps
+      description: CLI 명령어나 코드 예제를 포함해주세요
+      placeholder: |
+        1. `generateColorTokens({ pink: [340, 100, 88] })`
+        2. 출력된 결과 확인
+        3. 결과 명도값이 104%로 출력됨
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대한 결과 / Expected Behavior
+      placeholder: 명도는 100% 이하여야 함
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 실제 결과 / Actual Output
+      placeholder: 명도 104%가 나옴
+
+  - type: input
+    id: environment
+    attributes:
+      label: 실행 환경 / Environment
+      placeholder: Node.js 20.x / pnpm 8.x / Windows 11

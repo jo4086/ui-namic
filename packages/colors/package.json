@@ -1,6 +1,6 @@
 {
     "name": "@uinamic/colors",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "HSL 기반 명도 중심 CSS 색상 토큰 생성기",
     "type": "module",
     "main": "./dist/index.js",
@@ -35,7 +35,11 @@
     "packageManager": "pnpm@10.7.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/jo4086/ui-namic/tree/rebuild"
+        "url": "https://github.com/jo4086/ui-namic"
     },
-    "homepage": "https://github.com/jo4086/ui-namic/tree/rebuild/packages/colors"
+    "homepage": "https://github.com/jo4086/ui-namic/tree/main/packages/colors",
+    "bugs": {
+        "url": "https://github.com/jo4086/ui-namic/issues",
+        "email": "ghzktm5892@gmail.com"
+    }
 }

@@ -1,5 +1,11 @@
 # ui-namic
 
+> [!IMPORTANT]
+> `2025-04-25` 기준, **`rebuild` 브랜치의 모든 작업이 `main` 브랜치에 병합되었습니다.**
+> 앞으로는 `develop` **브랜치에서 기능 개발 및 테스트를 진행하고**,
+> **안정화된 결과물만 `main` 브랜치로 병합**합니다.
+
+
 ## 주의
 
 해당 프로젝트는 **javaScript**기반으로 만들어졌습니다. 개발자 공부를 시작한지 7~8개월이기에 **typeScript**까지 적용하기에는 배울게 너무 많아 먼저 **javaScript**로 만들었습니다.
@@ -22,7 +28,6 @@ npm install -g pnpm
 ```bash
 git clone https://github.com/jo4086/ui-namic.git
 cd ui-namic
-git checkout rebuild
 
 chmod +x setup-env.sh
 ./setup-env.sh
