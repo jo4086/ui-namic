@@ -62,21 +62,6 @@ function calculateSpectrum(centerL, lowRange, highRange, isLowRange) {
 
     const spectrum = [...new Set([...lowValues, ...highValues])].sort((a, b) => a - b)
 
-    console.log('')
-    console.log('lowData')
-    console.log('lowBias:', lowBias)
-    console.log('lowDelta:', lowDelta)
-    console.log('lowSteps:', lowSteps)
-    console.log('lowValues:', lowValues)
-
-    console.log('')
-    console.log('highData')
-    console.log('highBias:', highBias)
-    console.log('highDelta:', highDelta)
-    console.log('highSteps:', highSteps)
-    console.log('highValues:', highValues)
-    console.log('spectrum:', spectrum)
-    console.log('process end')
     return spectrum
 }
 
