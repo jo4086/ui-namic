@@ -138,6 +138,8 @@ const basePropertyList = [
     ...customCssList,
     ...flexItems,
     ...gridItems,
+
+    ...styleTriggerOnEventList,
 ]
 const flexPropertyList = ['display', 'flexFlow', 'flexDirection', 'flexWrap', 'justifyContent', 'alignContent', 'alignItems', 'alignSelf', 'justifySelf', 'placeItems', 'placeContent', 'placeSelf', 'gap']
 const gridPropertyList = [
@@ -174,3 +176,26 @@ export const displaySetMap = {
     grid: mergedGridPropertySet,
     table: mergedTablePropertySet,
 }
+
+const displayValueList = [
+    'block',
+    'inline',
+    'inline-block',
+    'flow-root',
+    'list-item',
+    'flex',
+    'inline-flex',
+    'grid',
+    'inline-grid',
+    'table',
+    'inline-table',
+    'table-caption',
+    'table-column',
+    'table-column-group',
+    'table-row-group',
+    'table-header-group',
+    'table-footer-group',
+    'table-row',
+    'table-cell',
+]
+export const displayValueSet = new Set(displayValueList)

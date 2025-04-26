@@ -2,7 +2,6 @@ import { getCachedExport } from './_cache.js'
 import { handleError } from './handleError.js'
 import { removeOverlayError } from './removeOverlayError.js'
 
-console.time('dev-tools')
 export async function validateHtmlTag(tag) {
     if (!tag) return
 
@@ -44,32 +43,10 @@ export async function validateStyleDSLKeys(referenceProps) {
     })
 }
 
-// export async function validateStyleDSLKeys(referenceProps) {
-//     if (!referenceProps) return
-
-//     const errorItems = {}
-
-//     const specialKeySet = await getCachedExport('specialKeySet', 'static')
-
-//     for (const key in referenceProps) {
-//         if (!specialKeySet.has(key)) {
-//             errorItems[key] = referenceProps[key]
-//         }
-//     }
-
-//     const errorAry = Object.keys(errorItems)
-
-//     if (errorAry.length === 0) return
-
-//     handleError('Invalid style object key(s) found in dynamicStyle', errorItems, { showOverlay: true })
-// }
-
-let displaySetMap
-
 export async function validateCssStringPropsForDisplay(primitiveProps, display) {
     if (!primitiveProps) return
 
-    displaySetMap = await getCachedExport('displaySetMap', 'static')
+    const displaySetMap = await getCachedExport('displaySetMap', 'static')
     const displayPropSet = displaySetMap[display]
 
     // console.log('primitiveProps:', primitiveProps)
@@ -88,4 +65,23 @@ export async function validateCssStringPropsForDisplay(primitiveProps, display) 
 
     handleError(message, data, { showOverlay: true })
 }
-console.timeEnd('dev-tools')
+
+export async function validateDisplay(display, type) {
+    if (!display || !type) return
+
+    const displayValueSet = await getCachedExport('displayValueSet', 'static')
+
+    // console.log(displayValueSet)
+
+    if (!displayValueSet.has(display)) {
+        const message = `Invalid display value '${display}' for tag <${type}>.`
+        const data = {
+            display,
+            type,
+            allowedDisplays: [...displayValueSet],
+            code: 'STYLE_INVALID_DISPLAY_VALUE',
+        }
+
+        handleError(message, data, { showOverlay: true })
+    }
+}
