@@ -1,15 +1,16 @@
-import express from 'express'
-import xxx from './api/xxxRouter'
-import yyy from './api/yyyRouter'
+import 'dotenv/config'
+import app, { App } from './app'
 
-const app = express()
+const PORT = process.env.PORT || 3000
 
-app.get('/', (req, res) => {
-    console.log(req)
-    res.send('ok2222')
-})
-
-app.use('/xxx', xxx)
-app.use('/yyy', yyy)
-
-app.listen(3000)
+async function bootstrap() {
+    try {
+        await App()
+        app.listen(PORT, () => {
+            console.log(`Server running at http://localhost:${PORT}`)
+        })
+    } catch (err) {
+        console.error('Failed to initialize app:', err)
+        process.exit(1)
+    }
+}

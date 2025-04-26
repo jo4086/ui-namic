@@ -1,9 +1,13 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
+        "typeRoots": ["src", "node_modules/@types"],
+        "types": ["node"],
         "esModuleInterop": true,
-        "baseUrl": "./",
         "paths": {
             "@/*": ["src/*"]
         }
     }
+
+    // "include": ["src/**/*"]
 }
