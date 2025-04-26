@@ -6,9 +6,9 @@ import { handleError } from './shared/handleError'
 import { validateStyleDSLKeys, validateCssStringPropsForDisplay } from './validateProxy'
 
 function santizeStyle_v2(config) {
-    const { display, type, dynamicStyle } = config
+    const { display, type, mergedStyle } = config
 
-    const formatStyleData = transformTransitionRecursive(dynamicStyle)
+    const formatStyleData = transformTransitionRecursive(mergedStyle)
 
     const { displayGroup, patchDisplay } = normalizeDisplay(type, display)
 
@@ -114,7 +114,7 @@ const validateDynamicStyleKeys = (referenceProps) => {
     // }
 
     if (Object.keys(errorItems).length > 0) {
-        handleError('Invalid style object key(s) found in dynamicStyle', errorItems)
+        handleError('Invalid style object key(s) found in mergedStyle', errorItems)
     }
 }
 

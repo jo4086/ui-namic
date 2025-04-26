@@ -24,6 +24,7 @@ const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img',
 const generateRenderData_v3 = ({ itemName, type: defaultType = 'div', display: defaultDisplay = 'block', dynamicType: defaultDynamicType = undefined, baseStyle: defaultBaseStyle = {} } = {}) => {
     return function GeneratedComponent({ children, type, display, dynamicType, dynamicStyle = {}, style, className, media, keyframes, dyOrder = [], dyState, watchValueMap, ...restProps }) {
         const newds = reMapKeys(dynamicStyle, dyPropToDomEventMap)
+        console.log(children)
 
         /**
          * @type {debug}
@@ -72,7 +73,7 @@ const generateRenderData_v3 = ({ itemName, type: defaultType = 'div', display: d
         const { styleProps, triggeredEvents } = santizeStyle_v2({
             type: resolvedType,
             display: resolvedDisplay,
-            dynamicStyle: mergedStyle,
+            mergedStyle,
         })
 
         const { handleDynamicEvents, triggeredMap, countMap } = useDynamicTrigger_v3({

@@ -5,11 +5,12 @@ async function loadDevTools() {
     if (validatorCache || preloadStarted) return validatorCache
     preloadStarted = true
     try {
-        const mod = await import('@dev-tools')
+        const mod = await import('@uinamic/dev-tools')
         validatorCache = {
             validateStyleDSLKeys: mod.validateStyleDSLKeys,
             validateHtmlTag: mod.validateHtmlTag,
             validateCssStringPropsForDisplay: mod.validateCssStringPropsForDisplay,
+            validateDisplay: mod.validateDisplay, // 추가
         }
         console.log('[dev-tools] 유효성 검사 활성화됨 ✅')
     } catch {
@@ -36,5 +37,11 @@ export function validateCssStringPropsForDisplay(props, display) {
 export function validateHtmlTag(props) {
     loadDevTools().then((validators) => {
         validators?.validateHtmlTag?.(props)
+    })
+}
+
+export function validateDisplay(display, type) {
+    loadDevTools().then((validators) => {
+        validators?.validateDisplay?.(display, type)
     })
 }

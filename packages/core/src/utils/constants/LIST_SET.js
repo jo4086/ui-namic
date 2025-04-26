@@ -31,28 +31,6 @@ export const tableTagList = ['table', 'caption', 'thead', 'tfoot', 'tbody', 'col
 export const tableTagSet = new Set(tableTagList)
 
 // 2. display 관련
-export const displayValueList = [
-    'block',
-    'inline',
-    'inline-block',
-    'flow-root',
-    'list-item',
-    'flex',
-    'inline-flex',
-    'grid',
-    'inline-grid',
-    'table',
-    'inline-table',
-    'table-caption',
-    'table-column',
-    'table-column-group',
-    'table-row-group',
-    'table-header-group',
-    'table-footer-group',
-    'table-row',
-    'table-cell',
-]
-export const displayValueSet = new Set(displayValueList)
 
 // 3. 가상 선택자 관련
 export const pseudoClassList = [
@@ -272,7 +250,6 @@ export const pseudoBrowserProperty = { list: pseudoBrowserPropertyList, set: pse
 
 // 7. 그룹화 및 기본 export
 export const tableTag = { list: tableTagList, set: tableTagSet }
-export const displayValue = { list: displayValueList, set: displayValueSet }
 export const pseudoClass = { list: pseudoClassList, set: pseudoClassSet }
 export const pseudoElement = { list: pseudoElementList, set: pseudoElementSet }
 export const allPseudo = { list: allPseudoList, set: allPseudoSet }
@@ -285,7 +262,6 @@ export const tableProperty = { list: tablePropertyList, set: tablePropertySet }
 
 const propsMap = {
     tableTag,
-    displayValue,
     pseudoClass,
     pseudoElement,
     functionalPseudo,

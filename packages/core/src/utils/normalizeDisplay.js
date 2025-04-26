@@ -1,7 +1,8 @@
 // @uinamic-system/normalizeDisplay.js
 
-import { tableTagSet, displayValueSet } from './constants'
+import { tableTagSet } from './constants'
 import { tableDisplayMap, displayGroupMap } from './constants' // import: Map
+import { validateDisplay } from './validateProxy'
 
 /**
  * @constant {Object} tableDisplayMap
@@ -31,32 +32,12 @@ import { tableDisplayMap, displayGroupMap } from './constants' // import: Map
 function normalizeDisplay(type, display) {
     const patchDisplay = tableTagSet.has(type) ? tableDisplayMap[type] : display
 
-    validDisplay(patchDisplay, type)
+    validateDisplay(patchDisplay, type)
 
     return { displayGroup: getDisplayGroup(patchDisplay), patchDisplay }
 }
 
 export default normalizeDisplay
-
-/**
- * @function validDisplay
- * - Validates whether a given display value is valid for the specified type.
- *
- * @param {string} display
- * - The CSS display value to validate.
- *
- * @param {string} type
- * - The HTML tag or element type.
- *
- * @throws {Error}
- * - If the display value is invalid.
- */
-
-const validDisplay = (display, type) => {
-    if (!displayValueSet.has(display)) {
-        throw new Error(`Invalid display value "${display}" for type "${type}". Allowed values: ${[...displayValueSet].join(', ')}`)
-    }
-}
 
 /**
  * @function getDisplayGroup
