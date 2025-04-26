@@ -6,7 +6,7 @@ function createItem(config) {
     const getRenderData = generateRenderData_v3(config)
 
     // console.log(getRenderData)
-    logStyle('config', config, 'skyblue')
+    // logStyle('config', config, 'skyblue')
 
     return function Component(props) {
         const renderData = getRenderData(props)
