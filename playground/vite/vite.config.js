@@ -10,7 +10,7 @@ export default defineConfig({
             '@react-ui': path.resolve(__dirname, '../../packages/react-ui/src/index.js'),
             '@debug': path.resolve(__dirname, '../../packages/debug/src/index.js'),
             '@core': path.resolve(__dirname, '../../packages/core/src/index.js'),
-            '@dev-tools': path.resolve(__dirname, '../../packages/dev-tools/src/index.js'),
+            '@uinamic/dev-tools': path.resolve(__dirname, '../../packages/dev-tools/src/index.js'),
         },
     },
     server: {

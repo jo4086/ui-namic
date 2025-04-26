@@ -14,20 +14,20 @@ const styl = {
 }
 
 const Intro = () => {
+    const [count, setCount] = useState(0)
     const [value, setValue] = useState('')
     const [text, setText] = useState('')
 
     const inputRef = useRef(null)
 
     return (
-        <>
-            <Box display="flex" dynamicStyle={styl} type="article" style={{ flexDirection: 'column', gap: '10px', backgroundColor: 'tan' }} dyClick={{ backgroundColor: 'blue' }}>
-                {/* <article style={{ padding: '20px', border: '1px solid red', display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: '20px 30px', borderRadius: '4px' }}>
-                    <Box>아티클2</Box>
-                    <Box>아티클3</Box>
-                    <Box>아티클4</Box>
-                </article>
-                <article>아티클</article> */}
+        <div>
+            <Button onClick={() => setCount((count) => count + 1)} dyClick="font-size:2rem;" dyOrder={['onClick', 'onFocus']} dyState={{ click: 'count' }} watchValueMap={{ count }}>
+                count is {count}
+            </Button>
+            <Button onClick={() => setCount((e) => (e = 0))}>카운트 초기화</Button>
+
+            {/* <Box display="flex" dynamicStyle={styl} type="article" style={{ flexDirection: 'column', gap: '10px', backgroundColor: 'tan' }} dyClick={{ backgroundColor: 'blue' }}>
                 <Box type="article">새로추가</Box>
                 <Box>새로추가</Box>
                 <Box>하이</Box>
@@ -40,10 +40,9 @@ const Intro = () => {
             </Box>
 
             <InputField ref={inputRef} />
-            <Button onClick={() => inputRef.current.focus()}>포커스</Button>
-        </>
+            <Button onClick={() => inputRef.current.focus()}>포커스</Button> */}
+        </div>
     )
 }
 
 export default Intro
-    
