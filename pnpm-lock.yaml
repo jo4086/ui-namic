@@ -18,7 +18,11 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  packages/colors: {}
+  packages/colors:
+    devDependencies:
+      tsup:
+        specifier: ^8.4.0
+        version: 8.4.0(postcss@8.5.3)(tsx@4.19.3)(typescript@5.8.3)(yaml@2.7.1)
 
   packages/core:
     dependencies:
@@ -4640,7 +4644,7 @@ snapshots:
       source-map: 0.8.0-beta.0
       sucrase: 3.35.0
       tinyexec: 0.3.2
-      tinyglobby: 0.2.12
+      tinyglobby: 0.2.13
       tree-kill: 1.2.2
     optionalDependencies:
       postcss: 8.5.3

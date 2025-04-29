@@ -51,5 +51,8 @@
     "bugs": {
         "url": "https://github.com/jo4086/ui-namic/issues",
         "email": "ghzktm5892@gmail.com"
+    },
+    "devDependencies": {
+        "tsup": "^8.4.0"
     }
 }
