@@ -1,6 +1,6 @@
 export * from './callback'
-export * from './remapKeys'
+export * from './renameKeys'
 export * from './camelToKebab'
-export * from './handleError'
 
 export { default as camelToKebab } from './camelToKebab'
+export { default as renameKeys } from './renameKeys'

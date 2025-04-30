@@ -8,7 +8,8 @@ import useDynamicTrigger_v3 from '../hooks/useDynamicTrigger_v3'
 import normalizeBaseStyle from './normalizeBaseStyle'
 import normalizeDom from './normalizeDOM'
 import { dxEventToDomEventMap, dyPropToDomEventMap, normalizeDyKeyToEventKey, styleTriggerDyEventSet } from './constants'
-import { forEachObject, reMapKeys } from './shared'
+import { forEachObject } from './shared'
+import renameKeys from './shared'
 import normalizeStyle_v2 from './normalizeStyle_v2'
 
 import { generateMetadata } from './generateMetadata'
@@ -23,8 +24,9 @@ const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img',
 
 const generateRenderData_v3 = ({ itemName, type: defaultType = 'div', display: defaultDisplay = 'block', dynamicType: defaultDynamicType = undefined, baseStyle: defaultBaseStyle = {} } = {}) => {
     return function GeneratedComponent({ children, type, display, dynamicType, dynamicStyle = {}, style, className, media, keyframes, dyOrder = [], dyState, watchValueMap, ...restProps }) {
-        const newds = reMapKeys(dynamicStyle, dyPropToDomEventMap)
-        console.log(children)
+        const eventStyle = renameKeys(dynamicStyle, dyPropToDomEventMap)
+        // console.log(children)
+        console.log(restProps.onClick)
 
         /**
          * @type {debug}
@@ -40,14 +42,14 @@ const generateRenderData_v3 = ({ itemName, type: defaultType = 'div', display: d
         forEachObject(restProps, (k, v) => {
             const dxKey = dyPropToDomEventMap[k]
             if (dxKey) {
-                newds[dxKey] = v
+                eventStyle[dxKey] = v
                 delete restProps[k]
             }
         })
 
         // 디스플레이 병합
         // const displayPriority = [defaultDisplay, display, dynamicStyle?.display, style?.display]
-        const displayPriority = [defaultDisplay, display, newds?.display, style?.display]
+        const displayPriority = [defaultDisplay, display, eventStyle?.display, style?.display]
         const resolvedDisplay = [...displayPriority].reverse().find((v) => v !== undefined)
 
         // tag 병합
@@ -57,7 +59,7 @@ const generateRenderData_v3 = ({ itemName, type: defaultType = 'div', display: d
         // style 병합
         const mergedStyle = {
             ...defaultBaseStyle,
-            ...newds,
+            ...eventStyle,
             ...(keyframes && { keyframes }),
             ...(media && { media }),
             ...style,

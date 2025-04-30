@@ -1,4 +1,4 @@
-export const reMapKeys = (obj, keyMap) => {
+export const renameKeys = (obj, keyMap) => {
     const result = {}
     for (const key in obj) {
         const value = obj[key]
@@ -8,3 +8,4 @@ export const reMapKeys = (obj, keyMap) => {
     }
     return result
 }
+export default renameKeys
